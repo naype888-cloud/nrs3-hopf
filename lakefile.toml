@@ -9,5 +9,10 @@ name = "NavaRobertsonIndependent"
 git = "https://github.com/naype888-cloud/nava-robertson-schrodinger.git"
 rev = "354921a62b69cc90b07811cde7c6d038977578c8"
 
+[[require]]
+name = "NRS3UncertaintyCone"
+git = "https://github.com/naype888-cloud/nrs3-uncertainty-cone.git"
+rev = "fca0591cecc675aca9c9a7c52e273bc04805bc65"
+
 [[lean_lib]]
 name = "NRS3Hopf"

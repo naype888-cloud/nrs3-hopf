@@ -11,7 +11,8 @@ Vale `1` exactamente cuando cada eje tiene 2 o 3 posiciones. Es estrictamente ma
 `C_∞⁸ = (π²/3 − 2)⁴ ≈ 2.768`, y el cociente tiende a ese valor cuando los cuatro ejes crecen,
 cada uno por su lado (Szegő, `D8`; monotonía, `D9`).
 
-Lean 4 sobre [`nava-robertson-schrodinger`](https://github.com/naype888-cloud/nava-robertson-schrodinger)
+Lean 4 sobre [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone)
+y [`nava-robertson-schrodinger`](https://github.com/naype888-cloud/nava-robertson-schrodinger)
 (D49c es el caso de tres ejes).
 
 ## Resultados
@@ -48,7 +49,12 @@ el cono y no tiene banda (`D44`). En el eje cerrado sí la tiene:
 | umbral `v* = 1/(√6/2) = √(2/3) < 1`: la banda `(√(2/3), 1]` no está vacía | `threshold_eq`, `threshold_lt_one` |
 | arriba de `√(2/3)` todo estado unitario tiene excedente positivo | `surplus_pos_of_speed` |
 
-Cerrar el eje agrega cuanto: con 3 posiciones abierto no hay banda, cerrado sí.
+| el intervalo del cuadrivector de incertidumbre es el excedente de Robertson–Schrödinger | `interval_eq_gramDefectAt` |
+| en la banda, todo estado unitario tiene tiempo propio `τ > 0` | `properTime_pos_of_speed` |
+| la corriente máxima del eje cerrado tiene `τ > 0`; en el eje abierto con 3 posiciones `τ = 0` | `properTime_maxState_pos`, `properTime_open_three` |
+
+Cerrar el eje agrega cuanto: con 3 posiciones abierto no hay banda ni tiempo propio en `c`;
+cerrado, sí. El tiempo propio nunca es negativo (`UncertaintyCone.mem_futureCone`).
 
 ## Puente físico declarado (propuesta)
 

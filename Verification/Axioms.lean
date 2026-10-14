@@ -28,3 +28,7 @@ import NRS3Hopf
 #print axioms ClosedThree.threshold_eq
 #print axioms ClosedThree.threshold_lt_one
 #print axioms ClosedThree.surplus_pos_of_speed
+#print axioms ClosedThree.interval_eq_gramDefectAt
+#print axioms ClosedThree.properTime_pos_of_speed
+#print axioms ClosedThree.properTime_maxState_pos
+#print axioms ClosedThree.properTime_open_three
