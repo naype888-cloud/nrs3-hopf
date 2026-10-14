@@ -70,7 +70,13 @@ costura salta todo el rango mientras cada enlace abierto avanza `2/(d − 1)`.
 | `1 ≤ c ≤ 1 + 2/(d − 1)` | `ClosedAxis.one_le_cMax`, `ClosedAxis.cMax_le` |
 | `c → 1`: al crecer el eje la corriente se junta en la costura | `ClosedAxis.tendsto_cMax` |
 
-Cada sistema fija su propia `c`; esta es la del eje cerrado.
+| en el estado de la costura, para todo `d`: `Var T° = 1/2`, `Var P = 1`, `cov = 0`, `⟨K⟩ = 1` | `variance_transport_seamState`, `variance_PdOp_seamState`, `tension_seamState` |
+| su excedente de Robertson–Schrödinger es `1/4` y su cociente `Var T° · Var P / (⟨K⟩/2)² = 2` | `gramDefectAt_seamState`, `ratio_seamState` |
+| su velocidad `⟨K⟩/c` tiende a `1` | `tendsto_speed_seamState` |
+
+Cada sistema fija su propia `c`; esta es la del eje cerrado. Al crecer el eje, el estado de la
+costura llega a esa `c` con razón de incertidumbre `√2` para todo `d`: el cuanto `√2 − 1` no se
+cierra en el límite.
 
 ## Puente físico declarado (propuesta)
 

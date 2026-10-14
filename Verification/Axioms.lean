@@ -38,3 +38,9 @@ import NRS3Hopf
 #print axioms ClosedAxis.one_le_cMax
 #print axioms ClosedAxis.cMax_le
 #print axioms ClosedAxis.tendsto_cMax
+#print axioms ClosedAxis.transport_seamState_apply
+#print axioms ClosedAxis.variance_transport_seamState
+#print axioms ClosedAxis.variance_PdOp_seamState
+#print axioms ClosedAxis.gramDefectAt_seamState
+#print axioms ClosedAxis.ratio_seamState
+#print axioms ClosedAxis.tendsto_speed_seamState
