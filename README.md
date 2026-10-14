@@ -31,6 +31,25 @@ Lean 4 sobre [`nava-robertson-schrodinger`](https://github.com/naype888-cloud/na
 | ninguna caja alcanza `C_∞⁸` | `ratio_lt_inf` |
 | el cociente tiende a `C_∞⁸` al crecer los cuatro ejes | `tendsto_ratio` |
 
+## El eje cerrado con tres posiciones
+
+Cerrar el eje es agregar el enlace `{0, 2}` (`D16e`): `T° = (J − I)/2`, normalizado por su
+radio espectral `2`, con la misma `P₃ = diag(−1, 0, 1)`. En el eje abierto, `d = 3` satura en
+el cono y no tiene banda (`D44`). En el eje cerrado sí la tiene:
+
+| Enunciado | Lean |
+|---|---|
+| un estado de incertidumbre mínima que se mueve cumple `2ψ₀ψ₂ = ψ₁(ψ₀ + ψ₂)` | `ClosedThree.relation_of_saturated` |
+| en esa cuádrica, `\|ζ\|²(‖ψ‖² ∓ ⟨K⟩) = (a² + a + b² + 1 ∓ 2b)² + 3a²`, así que `\|⟨K⟩\| ≤ ‖ψ‖²` | `abs_tension_le_of_relation` |
+| todo estado de incertidumbre mínima tiene `\|⟨K⟩\| ≤ ‖ψ‖²` | `abs_tension_le_of_saturated` |
+| la `c` del eje cerrado: `\|⟨K⟩\| ≤ √6/2`, alcanzada | `abs_tension_le_max`, `tension_maxState` |
+| `(1 + i, 2, 1 − i)/(2√2)` es de incertidumbre mínima con `⟨K⟩ = 1` | `saturated_satState`, `tension_satState` |
+| `1` es la mayor tensión de incertidumbre mínima | `isGreatest_satTension` |
+| umbral `v* = 1/(√6/2) = √(2/3) < 1`: la banda `(√(2/3), 1]` no está vacía | `threshold_eq`, `threshold_lt_one` |
+| arriba de `√(2/3)` todo estado unitario tiene excedente positivo | `surplus_pos_of_speed` |
+
+Cerrar el eje agrega cuanto: con 3 posiciones abierto no hay banda, cerrado sí.
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es

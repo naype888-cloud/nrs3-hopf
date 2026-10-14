@@ -16,3 +16,15 @@ import NRS3Hopf
 #print axioms RobertsonFourAxes.CoherenceConstantInf_pow_eight
 #print axioms RobertsonFourAxes.ratio_lt_inf
 #print axioms RobertsonFourAxes.tendsto_ratio
+#print axioms ClosedThree.relation_of_saturated
+#print axioms ClosedThree.abs_tension_le_of_relation
+#print axioms ClosedThree.abs_tension_le_of_saturated
+#print axioms ClosedThree.surplus_pos_of_one_lt
+#print axioms ClosedThree.abs_tension_le_max
+#print axioms ClosedThree.tension_maxState
+#print axioms ClosedThree.saturated_satState
+#print axioms ClosedThree.tension_satState
+#print axioms ClosedThree.isGreatest_satTension
+#print axioms ClosedThree.threshold_eq
+#print axioms ClosedThree.threshold_lt_one
+#print axioms ClosedThree.surplus_pos_of_speed
