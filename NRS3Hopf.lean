@@ -5,3 +5,4 @@ public import NRS3Hopf.RobertsonFourAxes
 public import NRS3Hopf.ClosedThree
 public import NRS3Hopf.ClosedThreeBand
 public import NRS3Hopf.ClosedThreeCone
+public import NRS3Hopf.ClosedAxis

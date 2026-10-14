@@ -56,6 +56,22 @@ el cono y no tiene banda (`D44`). En el eje cerrado sí la tiene:
 Cerrar el eje agrega cuanto: con 3 posiciones abierto no hay banda ni tiempo propio en `c`;
 cerrado, sí. El tiempo propio nunca es negativo (`UncertaintyCone.mem_futureCone`).
 
+## La `c` del eje cerrado tiende a `1`
+
+Con `d` posiciones el transporte cerrado es `(A_d + S)/2`: el camino abierto más la costura `S`,
+el enlace de la última posición a la primera. La posición sigue en `[−1, 1]`, así que la
+costura salta todo el rango mientras cada enlace abierto avanza `2/(d − 1)`.
+
+| Enunciado | Lean |
+|---|---|
+| `⟨K⟩ = (ρ_d/2) ⟨K_d⟩ − 2 Im(ψ̄₀ ψ_{d−1})`: parte abierta más costura | `ClosedAxis.tension_eq` |
+| `\|⟨K⟩\| ≤ 1 + 2/(d − 1)` en todo estado unitario | `ClosedAxis.abs_tension_le` |
+| el estado de la costura `(e₀ − i e_{d−1})/√2` alcanza `⟨K⟩ = 1` | `ClosedAxis.tension_seamState` |
+| `1 ≤ c ≤ 1 + 2/(d − 1)` | `ClosedAxis.one_le_cMax`, `ClosedAxis.cMax_le` |
+| `c → 1`: al crecer el eje la corriente se junta en la costura | `ClosedAxis.tendsto_cMax` |
+
+Cada sistema fija su propia `c`; esta es la del eje cerrado.
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es

@@ -32,3 +32,9 @@ import NRS3Hopf
 #print axioms ClosedThree.properTime_pos_of_speed
 #print axioms ClosedThree.properTime_maxState_pos
 #print axioms ClosedThree.properTime_open_three
+#print axioms ClosedAxis.tension_eq
+#print axioms ClosedAxis.abs_tension_le
+#print axioms ClosedAxis.tension_seamState
+#print axioms ClosedAxis.one_le_cMax
+#print axioms ClosedAxis.cMax_le
+#print axioms ClosedAxis.tendsto_cMax
