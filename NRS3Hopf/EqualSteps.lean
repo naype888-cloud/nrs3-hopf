@@ -7,6 +7,7 @@ module
 
 public import NRS3Hopf.ClosedThree
 public import Mathlib.Algebra.Lie.OfAssociative
+public import NavaRobertsonIndependent.Mathematics.D49i_TransportPositionLieClosure
 
 /-!
 # Equal steps: an identity of every open axis that the closed axis breaks
@@ -30,27 +31,13 @@ of `T°`, `P₃` satisfies `[Y₂, [Y₂, Y₁]] = c Y₁`, for any `c`: the ent
 
 @[expose] public noncomputable section
 
-open Matrix TransportPosition
+open Matrix TransportPosition LieClosure
 
 attribute [local instance 100] LieRing.ofAssociativeRing LieAlgebra.ofAssociativeAlgebra
 
 namespace EqualSteps
 
 variable {d : ℕ}
-
-theorem Pd_mul_apply (X : Matrix (Fin d) (Fin d) ℂ) (i j : Fin d) :
-    (Pd d * X) i j = posCoord d i * X i j := by
-  rw [Matrix.mul_apply, Finset.sum_eq_single i]
-  · simp [Pd]
-  · intro k _ hk; have hik : i ≠ k := Ne.symm hk; simp [Pd, hik]
-  · simp
-
-theorem mul_Pd_apply (X : Matrix (Fin d) (Fin d) ℂ) (i j : Fin d) :
-    (X * Pd d) i j = X i j * posCoord d j := by
-  rw [Matrix.mul_apply, Finset.sum_eq_single j]
-  · simp [Pd]
-  · intro k _ hk; simp [Pd, hk]
-  · simp
 
 /-- **Equal steps**: `[P_d, [P_d, T_d]] = h² T_d`, `h = 2/(d − 1)`, for every `d`. -/
 theorem lie_Pd_Pd_Td :

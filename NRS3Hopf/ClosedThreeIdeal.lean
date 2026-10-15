@@ -28,7 +28,7 @@ from one `E_pq` the brackets reach all six.
 
 @[expose] public noncomputable section
 
-open Matrix TransportPosition EqualSteps
+open Matrix TransportPosition EqualSteps LieClosure
 
 attribute [local instance 100] LieRing.ofAssociativeRing LieAlgebra.ofAssociativeAlgebra
 
