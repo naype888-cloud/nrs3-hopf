@@ -53,3 +53,7 @@ import NRS3Hopf
 #print axioms CubeInBox.robertson_det_box_strict
 #print axioms CubeInBox.cube_three_saturates
 #print axioms CubeInBox.cube_saturates_box_strict
+#print axioms ClosedAxisEntangled.eq_zero_of_eigen
+#print axioms ClosedAxisEntangled.exists_prodAlong_of_eigen
+#print axioms ClosedAxisEntangled.gramDefect_pos_of_band
+#print axioms ClosedAxisEntangled.gramDefect_box_pos

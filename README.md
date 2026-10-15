@@ -91,7 +91,10 @@ eje `w`. En estados producto:
 | el cubo `3 × 3 × 3` en corriente máxima satura (`det Σ₆ = \|det Ω₆\| = 1/64`) | `cube_three_saturates` |
 | **el cubo satura y la caja no**: con `w` cerrado en su corriente máxima, la caja es estricta | `cube_saturates_box_strict` |
 
-El cuarto eje no rompe nada de lo que se ve en `x`, `y`, `z`; solo puede agregar cuanto.
+| **para todo estado, enredado o no**: la fibra cerrada oculta con tensión mayor que `1` conserva su defecto | `ClosedAxisEntangled.gramDefect_pos_of_band`, `gramDefect_box_pos` |
+
+El cuarto eje no rompe nada de lo que se ve en `x`, `y`, `z`; solo puede agregar cuanto, y
+enredarlo con `x`, `y`, `z` no le quita su defecto (análogo de `D49e`).
 
 ## Puente físico declarado (propuesta)
 
