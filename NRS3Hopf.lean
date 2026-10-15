@@ -11,3 +11,4 @@ public import NRS3Hopf.CubeInBox
 public import NRS3Hopf.ClosedAxisEntangled
 public import NRS3Hopf.RobertsonEqualityLines
 public import NRS3Hopf.RobertsonEquality
+public import NRS3Hopf.ClosedAxisAlgebra

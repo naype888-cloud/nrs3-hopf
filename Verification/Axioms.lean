@@ -61,3 +61,14 @@ import NRS3Hopf
 #print axioms RobertsonEquality.commutator_sum
 #print axioms RobertsonEquality.le_finrank_ker
 #print axioms RobertsonEquality.exists_sigma_of_det_eq
+#print axioms ClosedAxisAlgebra.comm_eq
+#print axioms ClosedAxisAlgebra.PC_eq
+#print axioms ClosedAxisAlgebra.TC_eq
+#print axioms ClosedAxisAlgebra.eq_zero_of_Tc
+#print axioms ClosedAxisAlgebra.eq_zero_of_PC
+#print axioms ClosedAxisAlgebra.comm_mulVec_eq_zero_iff
+#print axioms ClosedAxisAlgebra.TC_mulVec_eq_zero_iff
+#print axioms ClosedAxisAlgebra.liftAlong_mul
+#print axioms ClosedAxisAlgebra.eq_zero_of_lift_Tc
+#print axioms ClosedAxisAlgebra.eq_zero_of_lift_PC
+#print axioms ClosedAxisAlgebra.lift_PC

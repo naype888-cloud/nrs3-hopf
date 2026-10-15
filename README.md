@@ -111,6 +111,16 @@ Tom (`n = 3`), la caja con la fibra cerrada (`n = 4`), una región de cristal en
 En la caja, ese eje puede ser la fibra cerrada oculta, que tiene defecto para todo estado en su
 banda (`ClosedAxisEntangled`).
 
+## El álgebra del eje cerrado (análogos de `D49i`, `D49r`)
+
+| Enunciado | Lean |
+|---|---|
+| `[T°, P₃] = ½ [[0, 1, 2], [−1, 0, 1], [−2, −1, 0]]`: la costura pesa el doble | `ClosedAxisAlgebra.comm_eq` |
+| `[P₃, [T°, P₃]] = −T° − (3/2) S`, invertible: no anula ningún estado | `PC_eq`, `eq_zero_of_PC` |
+| `[T°, [T°, P₃]] = (3/2)(P₃ + P₃T° + T°P₃)`, con núcleo la recta de `(1, −2, 1)`, igual que `[T°, P₃]` | `TC_eq`, `TC_mulVec_eq_zero_iff`, `comm_mulVec_eq_zero_iff` |
+| `T°` es invertible: el transporte no anula ningún estado | `eq_zero_of_Tc` |
+| en un producto, enredado o no, `T°` y `[P₃, [T°, P₃]]` no anulan ningún estado | `eq_zero_of_lift_Tc`, `eq_zero_of_lift_PC` |
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es
