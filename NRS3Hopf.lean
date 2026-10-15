@@ -18,3 +18,4 @@ public import NRS3Hopf.BoxEquality
 public import NRS3Hopf.StackedFibers
 public import NRS3Hopf.BoxExcess
 public import NRS3Hopf.SlTwoIdentity
+public import NRS3Hopf.BoxTwoRelations
