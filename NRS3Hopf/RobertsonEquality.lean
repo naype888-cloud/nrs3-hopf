@@ -34,6 +34,8 @@ closed fiber (`ClosedAxisEntangled`).
 - `RobertsonEquality.exists_single_axis` : `n` lines against dimension `n` leave a vector on any
   chosen axis alone.
 - `RobertsonEquality.commutator_sum` : `[L_a, L_b] = Σ_i σ_i(a, b) [A_{0,i}, A_{1,i}]`.
+- `RobertsonEquality.sup_ker_eq_top` : at equality the relations and the kernel of the
+  transpose span everything.
 - `RobertsonEquality.le_finrank_ker` : at equality the kernel has dimension at least `n`.
 - `RobertsonEquality.exists_sigma_of_det_eq` : one axis with a positive defect and equality give
   `Σ_i σ_i [A_{0,i}, A_{1,i}] Φ = 0` with `σ ≠ 0`.
@@ -135,11 +137,12 @@ theorem gramDefectC_eq_zero_of_rel {x y : EuclideanSpace ℂ ι} {α β : ℂ} (
 variable {Φ}
 
 omit hcomm in
-/-- **At equality the kernel of the Gram matrix has dimension at least `n`**, when
+/-- **At equality the relations and the kernel of the transpose span everything**, when
 `det Ω ≠ 0`. -/
-theorem le_finrank_ker (hΩ : (imMatrix L Φ).det ≠ 0)
+theorem sup_ker_eq_top (hΩ : (imMatrix L Φ).det ≠ 0)
     (heq : (covMatrix L Φ).det = |(imMatrix L Φ).det|) :
-    n ≤ Module.finrank ℂ (LinearMap.ker (gram ℂ (fluct L Φ)).mulVecLin) := by
+    LinearMap.ker (gram ℂ (fluct L Φ)).mulVecLin ⊔
+      LinearMap.ker (gram ℂ (fluct L Φ))ᵀ.mulVecLin = ⊤ := by
   set S := covMatrix L Φ
   set W := imMatrix L Φ
   set A : Matrix (Fin 2 × Fin n) (Fin 2 × Fin n) ℂ := S.map ((↑) : ℝ → ℂ)
@@ -165,16 +168,23 @@ theorem le_finrank_ker (hΩ : (imMatrix L Φ).det ≠ 0)
   have hnorm : ‖B.det‖ = A.det.re := by
     rw [det_smul, hW, norm_mul, norm_pow, Complex.norm_I, one_pow, one_mul, Complex.norm_real,
       Real.norm_eq_abs, hdetA, Complex.ofReal_re, heq]
+  refine eq_top_iff.mpr fun x _ => ?_
+  obtain ⟨y, z, hy, hz, rfl⟩ := exists_add_of_norm_det_eq hA hB h₁ h₂ hnorm x
+  refine Submodule.add_mem_sup (LinearMap.mem_ker.mpr ?_) (LinearMap.mem_ker.mpr ?_)
+  · rw [Matrix.mulVecLin_apply, hG]
+    exact hy
+  · rw [Matrix.mulVecLin_apply, hGt]
+    exact hz
+
+omit hcomm in
+/-- **At equality the kernel of the Gram matrix has dimension at least `n`**, when
+`det Ω ≠ 0`. -/
+theorem le_finrank_ker (hΩ : (imMatrix L Φ).det ≠ 0)
+    (heq : (covMatrix L Φ).det = |(imMatrix L Φ).det|) :
+    n ≤ Module.finrank ℂ (LinearMap.ker (gram ℂ (fluct L Φ)).mulVecLin) := by
   set N := LinearMap.ker (gram ℂ (fluct L Φ)).mulVecLin
   set M := LinearMap.ker (gram ℂ (fluct L Φ))ᵀ.mulVecLin
-  have hsup : N ⊔ M = ⊤ := by
-    refine eq_top_iff.mpr fun x _ => ?_
-    obtain ⟨y, z, hy, hz, rfl⟩ := exists_add_of_norm_det_eq hA hB h₁ h₂ hnorm x
-    refine Submodule.add_mem_sup (LinearMap.mem_ker.mpr ?_) (LinearMap.mem_ker.mpr ?_)
-    · rw [Matrix.mulVecLin_apply, hG]
-      exact hy
-    · rw [Matrix.mulVecLin_apply, hGt]
-      exact hz
+  have hsup : N ⊔ M = ⊤ := sup_ker_eq_top hΩ heq
   have hNM : Module.finrank ℂ M = Module.finrank ℂ N := finrank_ker_transpose _
   show n ≤ Module.finrank ℂ N
   have h := Submodule.finrank_sup_add_finrank_inf_eq N M

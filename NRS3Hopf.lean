@@ -19,3 +19,4 @@ public import NRS3Hopf.StackedFibers
 public import NRS3Hopf.BoxExcess
 public import NRS3Hopf.SlTwoIdentity
 public import NRS3Hopf.BoxTwoRelations
+public import NRS3Hopf.BoxFiberLine
