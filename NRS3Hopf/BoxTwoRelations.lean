@@ -133,4 +133,187 @@ theorem lam_lie (X Y : Axes dx dy dz) : lam ⁅X, Y⁆ = ⁅lam X, lam Y⁆ := b
     ← BoxCommute.liftAlong_yw_comm Y.2.1 X.2.2.2, ← BoxCommute.liftAlong_zw_comm Y.2.2.1 X.2.2.2]
   abel
 
+/-! ## 3. The identities on the box -/
+
+/-- Each component respects the bracket. -/
+theorem lie_fst (X Y : Axes dx dy dz) : (⁅X, Y⁆).1 = ⁅X.1, Y.1⁆ := by simp [Ring.lie_def]
+theorem lie_snd_fst (X Y : Axes dx dy dz) : (⁅X, Y⁆).2.1 = ⁅X.2.1, Y.2.1⁆ := by
+  simp [Ring.lie_def]
+theorem lie_snd_snd_fst (X Y : Axes dx dy dz) : (⁅X, Y⁆).2.2.1 = ⁅X.2.2.1, Y.2.2.1⁆ := by
+  simp [Ring.lie_def]
+theorem lie_snd_snd_snd (X Y : Axes dx dy dz) : (⁅X, Y⁆).2.2.2 = ⁅X.2.2.2, Y.2.2.2⁆ := by
+  simp [Ring.lie_def]
+
+/-- The four projections of the axes. -/
+def prX : Axes dx dy dz →+ Matrix (Fin dx) (Fin dx) ℂ := AddMonoidHom.fst _ _
+def prY : Axes dx dy dz →+ Matrix (Fin dy) (Fin dy) ℂ :=
+  (AddMonoidHom.fst _ _).comp (AddMonoidHom.snd _ _)
+def prZ : Axes dx dy dz →+ Matrix (Fin dz) (Fin dz) ℂ :=
+  (AddMonoidHom.fst _ _).comp ((AddMonoidHom.snd _ _).comp (AddMonoidHom.snd _ _))
+def prW : Axes dx dy dz →+ Matrix (Fin 3) (Fin 3) ℂ :=
+  (AddMonoidHom.snd _ _).comp ((AddMonoidHom.snd _ _).comp (AddMonoidHom.snd _ _))
+
+/-- The matrices of a combination `Σ_p a_p A_p`, axis by axis. -/
+def axesOf (a : Fin 2 × Fin 4 → ℂ) : Axes dx dy dz :=
+  (a (0, 0) • Td dx + a (1, 0) • Pd dx, a (0, 1) • Td dy + a (1, 1) • Pd dy,
+    a (0, 2) • Td dz + a (1, 2) • Pd dz, a (0, 3) • ClosedThree.Tc + a (1, 3) • Pd 3)
+
+/-- **On axes with `2` or `3` positions, `p` of two combinations lives on the fiber alone.** -/
+theorem lam_p₁ (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3) (hz : dz = 2 ∨ dz = 3)
+    (a b : Fin 2 × Fin 4 → ℂ) :
+    lam (p₁ (fun X Y : Axes dx dy dz => ⁅X, Y⁆) (axesOf a) (axesOf b)) =
+      liftAlong (eW dx dy dz 3) (p₁ (fun X Y : Matrix (Fin 3) (Fin 3) ℂ => ⁅X, Y⁆)
+        (axesOf (dx := dx) (dy := dy) (dz := dz) a).2.2.2
+        (axesOf (dx := dx) (dy := dy) (dz := dz) b).2.2.2) := by
+  have h1 := map_p₁ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prX
+    (fun X Y => lie_fst X Y) (axesOf a) (axesOf b)
+  have h2 := map_p₁ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prY
+    (fun X Y => lie_snd_fst X Y) (axesOf a) (axesOf b)
+  have h3 := map_p₁ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prZ
+    (fun X Y => lie_snd_snd_fst X Y) (axesOf a) (axesOf b)
+  have h4 := map_p₁ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prW
+    (fun X Y => lie_snd_snd_snd X Y) (axesOf a) (axesOf b)
+  simp only [prX, prY, prZ, prW, AddMonoidHom.coe_fst, AddMonoidHom.coe_snd,
+    AddMonoidHom.coe_comp, Function.comp_apply, axesOf] at h1 h2 h3 h4
+  rw [p₁_open hx] at h1
+  rw [p₁_open hy] at h2
+  rw [p₁_open hz] at h3
+  simp only [lam, AddMonoidHom.coe_mk, ZeroHom.coe_mk, h1, h2, h3, h4, liftAlong_zero, zero_add,
+    axesOf]
+
+theorem lam_p₂ (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3) (hz : dz = 2 ∨ dz = 3)
+    (a b : Fin 2 × Fin 4 → ℂ) :
+    lam (p₂ (fun X Y : Axes dx dy dz => ⁅X, Y⁆) (axesOf a) (axesOf b)) =
+      liftAlong (eW dx dy dz 3) (p₂ (fun X Y : Matrix (Fin 3) (Fin 3) ℂ => ⁅X, Y⁆)
+        (axesOf (dx := dx) (dy := dy) (dz := dz) a).2.2.2
+        (axesOf (dx := dx) (dy := dy) (dz := dz) b).2.2.2) := by
+  have h1 := map_p₂ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prX
+    (fun X Y => lie_fst X Y) (axesOf a) (axesOf b)
+  have h2 := map_p₂ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prY
+    (fun X Y => lie_snd_fst X Y) (axesOf a) (axesOf b)
+  have h3 := map_p₂ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prZ
+    (fun X Y => lie_snd_snd_fst X Y) (axesOf a) (axesOf b)
+  have h4 := map_p₂ (b := fun X Y : Axes dx dy dz => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆) prW
+    (fun X Y => lie_snd_snd_snd X Y) (axesOf a) (axesOf b)
+  simp only [prX, prY, prZ, prW, AddMonoidHom.coe_fst, AddMonoidHom.coe_snd,
+    AddMonoidHom.coe_comp, Function.comp_apply, axesOf] at h1 h2 h3 h4
+  rw [p₂_open hx] at h1
+  rw [p₂_open hy] at h2
+  rw [p₂_open hz] at h3
+  simp only [lam, AddMonoidHom.coe_mk, ZeroHom.coe_mk, h1, h2, h3, h4, liftAlong_zero, zero_add,
+    axesOf]
+
+/-! ## 4. From relations to operators -/
+
+/-- Matrices to operators, as an additive map. -/
+def toOp : Matrix (Site4D dx dy dz 3) (Site4D dx dy dz 3) ℂ →+
+    Module.End ℂ (H4D dx dy dz 3) where
+  toFun A := Matrix.toEuclideanLin A
+  map_zero' := map_zero _
+  map_add' := map_add _
+
+theorem toOp_apply (A : Matrix (Site4D dx dy dz 3) (Site4D dx dy dz 3) ℂ) :
+    toOp A = Matrix.toEuclideanLin A := rfl
+
+theorem toOp_lie (A B : Matrix (Site4D dx dy dz 3) (Site4D dx dy dz 3) ℂ) :
+    toOp ⁅A, B⁆ = ⁅toOp A, toOp B⁆ := by
+  simp only [toOp_apply, Ring.lie_def, map_sub]
+  congr 1 <;> exact Matrix.toLpLin_mul_same _ _ _
+
+/-- The combination `Σ_p a_p A_p` of the eight observables is the sum over the axes. -/
+theorem sum_boxPairs (a : Fin 2 × Fin 4 → ℂ) :
+    ∑ p, a p • boxPairs dx dy dz 3 closedPair p = toOp (lam (axesOf a)) := by
+  simp only [Fintype.sum_prod_type, Fin.sum_univ_two, Fin.sum_univ_four, toOp_apply, lam,
+    axesOf, AddMonoidHom.coe_mk, ZeroHom.coe_mk, liftAlong_add, liftAlong_smul, map_add, map_smul,
+    BoxCommute.box_x, BoxCommute.box_y, BoxCommute.box_z, BoxCommute.box_w]
+  simp only [closedPair, Matrix.cons_val_zero, Matrix.cons_val_one]
+  abel
+
+/-- **A relation makes `Φ` an eigenvector of the combination.** -/
+theorem eig_of_relation {Φ : H4D dx dy dz 3} {a : Fin 2 × Fin 4 → ℂ}
+    (ha : ∑ p, a p • centeredG (boxPairs dx dy dz 3 closedPair p) Φ = 0) :
+    toOp (lam (axesOf a)) Φ =
+      (∑ p, a p * (meanG (boxPairs dx dy dz 3 closedPair p) Φ : ℂ)) • Φ := by
+  have h : ∑ p, a p • boxPairs dx dy dz 3 closedPair p Φ =
+      ∑ p, (a p * (meanG (boxPairs dx dy dz 3 closedPair p) Φ : ℂ)) • Φ := by
+    simpa only [centeredG, smul_sub, Finset.sum_sub_distrib, sub_eq_zero, smul_smul] using ha
+  rw [← sum_boxPairs, LinearMap.sum_apply, Finset.sum_smul]
+  simpa only [LinearMap.smul_apply] using h
+
+/-! ## 5. No state is left -/
+
+/-- Two matrices on the fiber with no common kernel annihilate no nonzero state. -/
+theorem eq_zero_of_lift₂ {ι β : Type*} [Fintype ι] [Fintype β] [DecidableEq ι] [DecidableEq β]
+    (e : ι ≃ Fin 3 × β) {M N : Matrix (Fin 3) (Fin 3) ℂ}
+    (hMN : ∀ v, M.mulVec v = 0 → N.mulVec v = 0 → v = 0) {Φ : EuclideanSpace ℂ ι}
+    (hM : Matrix.toEuclideanLin (liftAlong e M) Φ = 0)
+    (hN : Matrix.toEuclideanLin (liftAlong e N) Φ = 0) : Φ = 0 := by
+  have hcol (K : Matrix (Fin 3) (Fin 3) ℂ) (hK : Matrix.toEuclideanLin (liftAlong e K) Φ = 0)
+      (b : β) : K.mulVec (AxisDefectEntangled.col e Φ b) = 0 := by
+    funext i
+    have := congrArg (fun x : EuclideanSpace ℂ ι => x (e.symm (i, b))) hK
+    simp only [PiLp.zero_apply] at this
+    rw [AxisDefectEntangled.liftAlong_apply_col] at this
+    exact this
+  ext q
+  have := congrFun (hMN _ (hcol M hM (e q).2) (hcol N hN (e q).2)) (e q).1
+  simpa [AxisDefectEntangled.col] using this
+
+section Relations
+
+variable (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3) (hz : dz = 2 ∨ dz = 3)
+  {Φ : H4D dx dy dz 3} {a b : Fin 2 × Fin 4 → ℂ}
+  (ha : ∑ p, a p • centeredG (boxPairs dx dy dz 3 closedPair p) Φ = 0)
+  (hb : ∑ p, b p • centeredG (boxPairs dx dy dz 3 closedPair p) Φ = 0)
+  (ha0 : a (0, 3) = 1) (ha1 : a (1, 3) = 0) (hb0 : b (0, 3) = 0) (hb1 : b (1, 3) = 1)
+include hx hy hz ha hb ha0 ha1 hb0 hb1
+
+omit hx hy hz ha hb in
+theorem fiber_parts : (axesOf (dx := dx) (dy := dy) (dz := dz) a).2.2.2 = ClosedThree.Tc ∧
+    (axesOf (dx := dx) (dy := dy) (dz := dz) b).2.2.2 = Pd 3 := by
+  simp [axesOf, ha0, ha1, hb0, hb1]
+
+/-- `p₁(T°, P₃)` on the fiber annihilates `Φ`. -/
+theorem lift_p₁_apply :
+    Matrix.toEuclideanLin (liftAlong (eW dx dy dz 3)
+      (p₁ (fun X Y : Matrix (Fin 3) (Fin 3) ℂ => ⁅X, Y⁆) ClosedThree.Tc (Pd 3))) Φ = 0 := by
+  have hw := fiber_parts (dx := dx) (dy := dy) (dz := dz) ha0 ha1 hb0 hb1
+  have k : (p₁ (fun X Y => ⁅X, Y⁆) (toOp (lam (axesOf a))) (toOp (lam (axesOf b)))) Φ = 0 :=
+    p₁_apply_eq_zero (eig_of_relation ha) (eig_of_relation hb)
+  have m := map_p₁ (b := fun X Y => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆)
+    (toOp (dx := dx) (dy := dy) (dz := dz)) toOp_lie (lam (axesOf a)) (lam (axesOf b))
+  have l := map_p₁ (b := fun X Y => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆)
+    (lam (dx := dx) (dy := dy) (dz := dz)) lam_lie (axesOf a) (axesOf b)
+  rw [lam_p₁ hx hy hz, hw.1, hw.2] at l
+  rwa [← m, ← l, toOp_apply] at k
+
+/-- `p₂(T°, P₃)` on the fiber annihilates `Φ`. -/
+theorem lift_p₂_apply :
+    Matrix.toEuclideanLin (liftAlong (eW dx dy dz 3)
+      (p₂ (fun X Y : Matrix (Fin 3) (Fin 3) ℂ => ⁅X, Y⁆) ClosedThree.Tc (Pd 3))) Φ = 0 := by
+  have hw := fiber_parts (dx := dx) (dy := dy) (dz := dz) ha0 ha1 hb0 hb1
+  have k : (p₂ (fun X Y => ⁅X, Y⁆) (toOp (lam (axesOf a))) (toOp (lam (axesOf b)))) Φ = 0 :=
+    p₂_apply_eq_zero (eig_of_relation ha) (eig_of_relation hb)
+  have m := map_p₂ (b := fun X Y => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆)
+    (toOp (dx := dx) (dy := dy) (dz := dz)) toOp_lie (lam (axesOf a)) (lam (axesOf b))
+  have l := map_p₂ (b := fun X Y => ⁅X, Y⁆) (b' := fun X Y => ⁅X, Y⁆)
+    (lam (dx := dx) (dy := dy) (dz := dz)) lam_lie (axesOf a) (axesOf b)
+  rw [lam_p₂ hx hy hz, hw.1, hw.2] at l
+  calc Matrix.toEuclideanLin (liftAlong (eW dx dy dz 3)
+        (p₂ (fun X Y : Matrix (Fin 3) (Fin 3) ℂ => ⁅X, Y⁆) ClosedThree.Tc (Pd 3))) Φ
+      = toOp (p₂ (fun X Y => ⁅X, Y⁆) (lam (axesOf a)) (lam (axesOf b))) Φ := by
+        rw [← l]; rfl
+    _ = (p₂ (fun X Y => ⁅X, Y⁆) (toOp (lam (axesOf a))) (toOp (lam (axesOf b)))) Φ := by
+        rw [m]
+    _ = 0 := k
+
+/-- **Two relations through `T°` and `P₃` leave no state.** On the box with `2` or `3` positions
+on `x`, `y`, `z` and the closed fiber, two relations among the fluctuation vectors whose fiber
+parts are `T°` and `P₃` force `Φ = 0`. -/
+theorem eq_zero_of_relations : Φ = 0 :=
+  eq_zero_of_lift₂ (eW dx dy dz 3) (fun _ h₁ h₂ => eq_zero_of_p_closed h₁ h₂)
+    (lift_p₁_apply hx hy hz ha hb ha0 ha1 hb0 hb1) (lift_p₂_apply hx hy hz ha hb ha0 ha1 hb0 hb1)
+
+end Relations
+
 end BoxTwoRelations

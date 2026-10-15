@@ -98,3 +98,4 @@ import NRS3Hopf
 #print axioms SlTwoIdentity.p₂_closed
 #print axioms SlTwoIdentity.eq_zero_of_p_closed
 #print axioms BoxTwoRelations.lam_lie
+#print axioms BoxTwoRelations.eq_zero_of_relations
