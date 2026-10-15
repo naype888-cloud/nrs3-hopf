@@ -86,3 +86,7 @@ import NRS3Hopf
 #print axioms RobertsonCoupling.linearIndependent_real
 #print axioms RobertsonCoupling.exists_coupling
 #print axioms BoxEquality.exists_coupling
+#print axioms BoxExcess.closedFactor_eq
+#print axioms BoxExcess.closedExcess_eq
+#print axioms BoxExcess.boxExcess_eq
+#print axioms BoxExcess.boxExcess_three
