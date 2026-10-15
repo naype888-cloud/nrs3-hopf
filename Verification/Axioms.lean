@@ -82,3 +82,7 @@ import NRS3Hopf
 #print axioms StackedFibers.one_lt_closedFactor
 #print axioms StackedFibers.closed_stack
 #print axioms StackedFibers.tendsto_closedFactor_pow
+#print axioms RobertsonCoupling.finrank_span_le
+#print axioms RobertsonCoupling.linearIndependent_real
+#print axioms RobertsonCoupling.exists_coupling
+#print axioms BoxEquality.exists_coupling

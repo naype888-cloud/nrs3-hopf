@@ -118,6 +118,8 @@ banda (`ClosedAxisEntangled`):
 |---|---|
 | en la caja de 4 ejes, los observables de ejes distintos conmutan | `BoxCommute.boxPairs_comm` |
 | **igualdad en la caja con la fibra oculta en su banda ⇒ `Σ_i σ_i [T_i, P_i] Φ = 0`, `σ ≠ 0`** (primer paso de `D49t` para la caja) | `BoxEquality.exists_sigma_of_det_eq` |
+| en la igualdad los `2n` vectores de fluctuación generan dimensión `≤ n`, son independientes sobre `ℝ`, y el eje con defecto se acopla con los demás | `RobertsonCoupling.finrank_span_le`, `linearIndependent_real`, `exists_coupling` |
+| **en la caja: igualdad ⇒ la fibra oculta se acopla con `x`, `y`, `z`** | `BoxEquality.exists_coupling` |
 
 ## El álgebra del eje cerrado (análogos de `D49i`, `D49r`)
 
