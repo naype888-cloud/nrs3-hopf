@@ -11,6 +11,9 @@ Vale `1` exactamente cuando cada eje tiene 2 o 3 posiciones. Es estrictamente ma
 `C_∞⁸ = (π²/3 − 2)⁴ ≈ 2.768`, y el cociente tiende a ese valor cuando los cuatro ejes crecen,
 cada uno por su lado (Szegő, `D8`; monotonía, `D9`).
 
+**[▶ Pruébalo: x, y, z abiertos con la fibra w cerrada, los determinantes y la banda](https://naype888-cloud.github.io/nrs3-hopf/)**
+(local: `docs/index.html`)
+
 Lean 4 sobre [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone)
 y [`nava-robertson-schrodinger`](https://github.com/naype888-cloud/nava-robertson-schrodinger)
 (D49c es el caso de tres ejes).
