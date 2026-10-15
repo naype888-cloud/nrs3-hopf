@@ -90,3 +90,5 @@ import NRS3Hopf
 #print axioms BoxExcess.closedExcess_eq
 #print axioms BoxExcess.boxExcess_eq
 #print axioms BoxExcess.boxExcess_three
+#print axioms BoxExcess.det_covMatrix_cube_maxCurrent
+#print axioms BoxExcess.det_covMatrix_box_maxCurrent

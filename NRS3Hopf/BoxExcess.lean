@@ -28,12 +28,18 @@ the term of `x`, `y`, `z` inside the excess of the box, and the fiber enters onl
 - `BoxExcess.closedExcess_eq` : `δ_w = (√5 − 2)/2`.
 - `BoxExcess.boxExcess_eq` : the expansion, with `𝒱` as the term of `x`, `y`, `z`.
 - `BoxExcess.boxExcess_three` : at `3 × 3 × 3` the excess of the box is `δ_w`.
+- `BoxExcess.det_covMatrix_cube_maxCurrent` : at the maximal current state of the cube,
+  `det Σ₆ = (C(dx) C(dy) C(dz))² |det Ω₆|`.
+- `BoxExcess.det_covMatrix_box_maxCurrent` : at the maximal current state of the box with the
+  closed fiber, `det Σ₈ = (1 + boxExcess)² |det Ω₈|`: the excess of the box is the excess of
+  the Robertson ratio.
 -/
 
 @[expose] public noncomputable section
 
 open Complex NRSInequality TransportPosition EigenvectorSaturation CubeInBox StackedFibers
-open DimensionalQuantum VolumetricQuantum ClosedThree
+open DimensionalQuantum VolumetricQuantum ClosedThree Matrix FourAxes Gnomon PathGraph3DNRS
+open RobertsonDeterminant RobertsonDeterminant3D RobertsonDeterminantProduct CubeSpectrum
 
 namespace BoxExcess
 
@@ -134,6 +140,57 @@ theorem boxExcess_eq (dx dy dz : ℕ) :
 every other open term. -/
 theorem boxExcess_three : boxExcess 3 3 3 = (√5 - 2) / 2 := by
   rw [boxExcess, dimQuantum_three, ← closedExcess_eq]
+  ring
+
+/-! ## 3. The excess of the box is the excess of the Robertson ratio -/
+
+variable {dx dy dz : ℕ}
+
+/-- **The ratio of the cube at its maximal current state**:
+`det Σ₆ = (C(dx) C(dy) C(dz))² |det Ω₆|`. -/
+theorem det_covMatrix_cube_maxCurrent (hx : 2 ≤ dx) (hy : 2 ≤ dy) (hz : 2 ≤ dz) :
+    (covMatrix (pairs dx dy dz) (maxCurrentCubeState dx dy dz)).det =
+      (CoherenceConstant dx * CoherenceConstant dy * CoherenceConstant dz) ^ 2 *
+        |(imMatrix (pairs dx dy dz) (maxCurrentCubeState dx dy dz)).det| := by
+  have hom (i : Fin 3) : tensionG (pairs dx dy dz (0, i)) (pairs dx dy dz (1, i))
+      (maxCurrentCubeState dx dy dz) = -2 * omega (maxCurrentCubeState dx dy dz) i :=
+    tensionG_eq (pairs_isSymmetric _ _ _ _) (pairs_isSymmetric _ _ _ _)
+  rw [det_covMatrix_maxCurrentCubeState hx hy hz, abs_det_imMatrix_pairs,
+    show TX dx dy dz = pairs dx dy dz (0, 0) from rfl,
+    show PX dx dy dz = pairs dx dy dz (1, 0) from rfl,
+    show TY dx dy dz = pairs dx dy dz (0, 1) from rfl,
+    show PY dx dy dz = pairs dx dy dz (1, 1) from rfl,
+    show TZ dx dy dz = pairs dx dy dz (0, 2) from rfl,
+    show PZ dx dy dz = pairs dx dy dz (1, 2) from rfl, hom 0, hom 1, hom 2]
+  ring
+
+/-- **The excess of the box is the excess of its Robertson ratio**: at the maximal current
+state of `x`, `y`, `z` and of the closed fiber, `det Σ₈ = (1 + boxExcess)² |det Ω₈|`. -/
+theorem det_covMatrix_box_maxCurrent (hx : 2 ≤ dx) (hy : 2 ≤ dy) (hz : 2 ≤ dz) :
+    (covMatrix (boxPairs dx dy dz 3 closedPair)
+        (prod4 (maxCurrentState dx) (maxCurrentState dy) (maxCurrentState dz) maxState)).det =
+      (1 + boxExcess dx dy dz) ^ 2 *
+        |(imMatrix (boxPairs dx dy dz 3 closedPair)
+          (prod4 (maxCurrentState dx) (maxCurrentState dy) (maxCurrentState dz)
+            maxState)).det| := by
+  have hu := norm_maxCurrentState hx
+  have hv := norm_maxCurrentState hy
+  have hw := norm_maxCurrentState hz
+  have hi : |(imMatrix (wPair closedPair) maxState).det| ≠ 0 := by
+    rw [abs_det_imMatrix_closed]
+    exact pow_ne_zero 2 imPart_maxState_ne_zero
+  have hF : (covMatrix (wPair closedPair) maxState).det =
+      closedFactor * |(imMatrix (wPair closedPair) maxState).det| := by
+    rw [closedFactor, div_mul_cancel₀ _ hi]
+  have hb : (1 + boxExcess dx dy dz) ^ 2 =
+      (CoherenceConstant dx * CoherenceConstant dy * CoherenceConstant dz) ^ 2 * closedFactor := by
+    rw [boxExcess, closedExcess, dimQuantum, dimQuantum, dimQuantum,
+      ← CoherenceConstant_eq_one_add_geometricGap, ← CoherenceConstant_eq_one_add_geometricGap,
+      ← CoherenceConstant_eq_one_add_geometricGap, add_sub_cancel, add_sub_cancel, mul_pow,
+      Real.sq_sqrt (by rw [closedFactor_eq]; norm_num)]
+  rw [det_covMatrix_box hu hv hw norm_maxState closedPair_isHermitian,
+    abs_det_imMatrix_box hu hv hw norm_maxState closedPair_isHermitian,
+    ← maxCurrentCubeState_eq_prod3, det_covMatrix_cube_maxCurrent hx hy hz, hF, hb]
   ring
 
 end BoxExcess
