@@ -72,3 +72,5 @@ import NRS3Hopf
 #print axioms ClosedAxisAlgebra.eq_zero_of_lift_Tc
 #print axioms ClosedAxisAlgebra.eq_zero_of_lift_PC
 #print axioms ClosedAxisAlgebra.lift_PC
+#print axioms BoxCommute.boxPairs_comm
+#print axioms BoxEquality.exists_sigma_of_det_eq

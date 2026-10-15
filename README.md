@@ -109,7 +109,12 @@ Tom (`n = 3`), la caja con la fibra cerrada (`n = 4`), una región de cristal en
 | **un solo eje con defecto positivo** + `det Ω ≠ 0` + igualdad ⇒ `Σ_i σ_i [A_{0,i}, A_{1,i}] Φ = 0` con `σ ≠ 0` | `RobertsonEquality.exists_sigma_of_det_eq` |
 
 En la caja, ese eje puede ser la fibra cerrada oculta, que tiene defecto para todo estado en su
-banda (`ClosedAxisEntangled`).
+banda (`ClosedAxisEntangled`):
+
+| Enunciado | Lean |
+|---|---|
+| en la caja de 4 ejes, los observables de ejes distintos conmutan | `BoxCommute.boxPairs_comm` |
+| **igualdad en la caja con la fibra oculta en su banda ⇒ `Σ_i σ_i [T_i, P_i] Φ = 0`, `σ ≠ 0`** (primer paso de `D49t` para la caja) | `BoxEquality.exists_sigma_of_det_eq` |
 
 ## El álgebra del eje cerrado (análogos de `D49i`, `D49r`)
 

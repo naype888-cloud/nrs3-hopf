@@ -12,3 +12,5 @@ public import NRS3Hopf.ClosedAxisEntangled
 public import NRS3Hopf.RobertsonEqualityLines
 public import NRS3Hopf.RobertsonEquality
 public import NRS3Hopf.ClosedAxisAlgebra
+public import NRS3Hopf.BoxCommute
+public import NRS3Hopf.BoxEquality
