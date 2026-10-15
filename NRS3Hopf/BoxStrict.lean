@@ -5,21 +5,22 @@ Authors: Eduardo Nava-Hernandez
 -/
 module
 
-public import NRS3Hopf.RobertsonEqualityPlane
+public import NRS3Hopf.BoxNoState
 
 /-!
 # Robertson 1934 is strict on the box with the closed fiber in its band
 
-On the box with `2` or `3` positions on `x`, `y`, `z` and the closed fiber with three positions,
-take a unit state with the fiber in its band, `|⟨i[T°, P₃]⟩| > 1`.
+On the box with any number of positions on `x`, `y`, `z` and the closed fiber with three
+positions, take a unit state with the fiber in its band, `|⟨i[T°, P₃]⟩| > 1`.
 
 Operators of different axes commute, so `Ω` is block diagonal for every state and
 `|det Ω| = Π_i (t_i/2)²`, `t_i` the tension of axis `i`. If `det Ω ≠ 0`, at equality:
 
 * the fiber has a positive defect (`ClosedAxisEntangled`), so the relations cross it in both
   directions (`RobertsonEqualityPlane`);
-* but on `x`, `y`, `z` with `2` or `3` positions they cross it along a line only
-  (`BoxFiberLine`), since two relations through `T°` and `P₃` leave no state.
+* the open axes have equal steps, `[P_d, [P_d, T_d]] = h² T_d` for every `d`, which no basis of
+  the plane of `T°`, `P₃` satisfies (`EqualSteps`), so the algebra of the relations reaches the
+  fiber alone and leaves no state (`BoxNoState`).
 
 So equality never holds with `det Ω ≠ 0`. With `det Ω = 0` it holds only as `0 = 0`, when
 `det Σ₈ = 0`, as for a position eigenstate on `x`. So in the band Robertson 1934 is strict exactly
@@ -29,7 +30,6 @@ entangled with `x`, `y`, `z` or not.
 ## Main results
 
 - `BoxStrict.abs_det_imMatrix_eq` : on `n` commuting axes, `|det Ω| = (Π_i t_i/2)²`.
-- `BoxStrict.boxPairs_isSymmetric` : the eight observables of the box are symmetric.
 - `BoxStrict.robertson_det_box_lt_of_det` : strict when `det Ω ≠ 0`.
 - `BoxStrict.robertson_det_box_lt_iff` : in the band, strict exactly when `det Σ₈ ≠ 0`.
 - `BoxStrict.robertson_det_box_lt` : strict when `x`, `y`, `z` carry nonzero tensions.
@@ -88,46 +88,20 @@ end Generic
 
 variable {dx dy dz : ℕ}
 
-/-- The eight observables of the box with the closed fiber are symmetric. -/
-theorem boxPairs_isSymmetric (p : Fin 2 × Fin 4) :
-    (boxPairs dx dy dz 3 closedPair p).IsSymmetric := by
-  obtain ⟨s, i⟩ := p
-  have hT (d : ℕ) : (![Td d, Pd d] s).IsHermitian := by
-    fin_cases s
-    exacts [Td_isHermitian d, Pd_isHermitian d]
-  match i with
-  | 0 => rw [BoxCommute.box_x]
-         exact Matrix.isSymmetric_toEuclideanLin_iff.mpr (liftAlong_isHermitian _ (hT dx))
-  | 1 => rw [BoxCommute.box_y]
-         exact Matrix.isSymmetric_toEuclideanLin_iff.mpr (liftAlong_isHermitian _ (hT dy))
-  | 2 => rw [BoxCommute.box_z]
-         exact Matrix.isSymmetric_toEuclideanLin_iff.mpr (liftAlong_isHermitian _ (hT dz))
-  | 3 => rw [BoxCommute.box_w]
-         exact Matrix.isSymmetric_toEuclideanLin_iff.mpr
-           (liftAlong_isHermitian _ (closedPair_isHermitian s))
-
 /-- **With `det Ω ≠ 0`, Robertson 1934 is strict on the box with the closed fiber in its band.**
-With `2` or `3` positions on `x`, `y`, `z`, every unit state with `det Ω ≠ 0` and
-`|⟨i[T°, P₃]⟩| > 1` has `|det Ω₈| < det Σ₈`. -/
-theorem robertson_det_box_lt_of_det (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3)
-    (hz : dz = 2 ∨ dz = 3) {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
+For every size of `x`, `y`, `z`, every unit state with `det Ω ≠ 0` and `|⟨i[T°, P₃]⟩| > 1` has
+`|det Ω₈| < det Σ₈`. -/
+theorem robertson_det_box_lt_of_det {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
     (hb : 1 < |tensionG (boxPairs dx dy dz 3 closedPair (0, 3))
       (boxPairs dx dy dz 3 closedPair (1, 3)) Φ|)
     (hΩ : (imMatrix (boxPairs dx dy dz 3 closedPair) Φ).det ≠ 0) :
     |(imMatrix (boxPairs dx dy dz 3 closedPair) Φ).det| <
       (covMatrix (boxPairs dx dy dz 3 closedPair) Φ).det := by
-  refine (robertson_det _ Φ).lt_of_ne fun heq => ?_
-  have h1 := BoxFiberLine.finrank_map_fiberPart_eq_one hx hy hz hΦ hΩ heq.symm
-  rw [RobertsonEqualityPlane.map_fiberPart_eq_top
-    (fun s t i j h ψ => BoxCommute.boxPairs_comm closedPair s t i j h ψ) boxPairs_isSymmetric 3
-    (ClosedAxisEntangled.gramDefect_box_pos hΦ hb) hΩ heq.symm, finrank_top,
-    Module.finrank_fin_fun] at h1
-  exact absurd h1 (by norm_num)
+  exact (robertson_det _ Φ).lt_of_ne fun heq => BoxNoState.eq_zero_of_det_eq hΦ hb hΩ heq.symm
 
 /-- **In the band, Robertson 1934 on the box is strict exactly when `det Σ₈ ≠ 0`**: the only
 equality left is `0 = 0`. -/
-theorem robertson_det_box_lt_iff (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3)
-    (hz : dz = 2 ∨ dz = 3) {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
+theorem robertson_det_box_lt_iff {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
     (hb : 1 < |tensionG (boxPairs dx dy dz 3 closedPair (0, 3))
       (boxPairs dx dy dz 3 closedPair (1, 3)) Φ|) :
     |(imMatrix (boxPairs dx dy dz 3 closedPair) Φ).det| <
@@ -138,21 +112,21 @@ theorem robertson_det_box_lt_iff (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 
   by_cases hΩ : (imMatrix (boxPairs dx dy dz 3 closedPair) Φ).det = 0
   · rw [hΩ, abs_zero] at hle ⊢
     exact lt_of_le_of_ne hle (Ne.symm hS)
-  · exact robertson_det_box_lt_of_det hx hy hz hΦ hb hΩ
+  · exact robertson_det_box_lt_of_det hΦ hb hΩ
 
 /-- **Robertson 1934 is strict on the box with the closed fiber in its band**, whenever `x`, `y`,
-`z` carry nonzero tensions: with `2` or `3` positions on `x`, `y`, `z`, `|det Ω₈| < det Σ₈`. -/
-theorem robertson_det_box_lt (hx : dx = 2 ∨ dx = 3) (hy : dy = 2 ∨ dy = 3)
-    (hz : dz = 2 ∨ dz = 3) {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
+`z` carry nonzero tensions: for every size of `x`, `y`, `z`, `|det Ω₈| < det Σ₈`. -/
+theorem robertson_det_box_lt {Φ : H4D dx dy dz 3} (hΦ : ‖Φ‖ = 1)
     (hb : 1 < |tensionG (boxPairs dx dy dz 3 closedPair (0, 3))
       (boxPairs dx dy dz 3 closedPair (1, 3)) Φ|)
     (ht : ∀ i : Fin 3, tensionG (boxPairs dx dy dz 3 closedPair (0, i.castSucc))
       (boxPairs dx dy dz 3 closedPair (1, i.castSucc)) Φ ≠ 0) :
     |(imMatrix (boxPairs dx dy dz 3 closedPair) Φ).det| <
       (covMatrix (boxPairs dx dy dz 3 closedPair) Φ).det := by
-  refine robertson_det_box_lt_of_det hx hy hz hΦ hb fun hΩ => ?_
+  refine robertson_det_box_lt_of_det hΦ hb fun hΩ => ?_
   have h := abs_det_imMatrix_eq Φ
-    (fun s t i j h ψ => BoxCommute.boxPairs_comm closedPair s t i j h ψ) boxPairs_isSymmetric
+    (fun s t i j h ψ => BoxCommute.boxPairs_comm closedPair s t i j h ψ)
+    BoxEverySize.boxPairs_isSymmetric
   rw [hΩ, abs_zero, eq_comm, Fin.prod_univ_four] at h
   have hw : tensionG (boxPairs dx dy dz 3 closedPair (0, 3))
       (boxPairs dx dy dz 3 closedPair (1, 3)) Φ ≠ 0 := by
