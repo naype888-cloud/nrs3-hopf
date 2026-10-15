@@ -19,6 +19,8 @@ are orthogonal, so `Σ` and `Ω` are block diagonal, one `2 × 2` block per axis
 ## Main results
 
 - `FourAxes.inner_prod4` : inner products factor over the four axes.
+- `FourAxes.covMatrix_box`, `FourAxes.imMatrix_box` : with any pair on the fourth axis, `Σ` and
+  `Ω` are block diagonal on product states.
 - `FourAxes.covMatrix_prod4` : `Σ` is block diagonal on product states.
 - `FourAxes.imMatrix_prod4` : `Ω` is block diagonal on product states.
 - `FourAxes.det_imMatrix_pair` : the `2 × 2` block of `Ω` has determinant `t²/4`.
@@ -64,12 +66,25 @@ def eW : Site4D dx dy dz dw ≃ Fin dw × (Fin dx × Fin dy × Fin dz) where
   left_inv _ := rfl
   right_inv _ := rfl
 
-/-- The eight observables: `(0, i)` is the transport of axis `i`, `(1, i)` its position. -/
-def pairs4 (p : Fin 2 × Fin 4) : H4D dx dy dz dw →ₗ[ℂ] H4D dx dy dz dw :=
+/-- The eight observables with any pair `M` on the `w` axis: `(0, i)` is the transport of axis
+`i`, `(1, i)` its position. -/
+def boxPairs (M : Fin 2 → Matrix (Fin dw) (Fin dw) ℂ) (p : Fin 2 × Fin 4) :
+    H4D dx dy dz dw →ₗ[ℂ] H4D dx dy dz dw :=
   ![Matrix.toEuclideanLin (liftAlong (eX dx dy dz dw) (![Td dx, Pd dx] p.1)),
     Matrix.toEuclideanLin (liftAlong (eY dx dy dz dw) (![Td dy, Pd dy] p.1)),
     Matrix.toEuclideanLin (liftAlong (eZ dx dy dz dw) (![Td dz, Pd dz] p.1)),
-    Matrix.toEuclideanLin (liftAlong (eW dx dy dz dw) (![Td dw, Pd dw] p.1))] p.2
+    Matrix.toEuclideanLin (liftAlong (eW dx dy dz dw) (M p.1))] p.2
+
+/-- The eight observables of the open box: `(T_d, P_d)` on every axis. -/
+abbrev pairs4 : Fin 2 × Fin 4 → H4D dx dy dz dw →ₗ[ℂ] H4D dx dy dz dw :=
+  boxPairs dx dy dz dw ![Td dw, Pd dw]
+
+/-- The pair of the `w` axis as operators. -/
+def wPair {d : ℕ} (M : Fin 2 → Matrix (Fin d) (Fin d) ℂ) (a : Fin 2) : Hd d →ₗ[ℂ] Hd d :=
+  Matrix.toEuclideanLin (M a)
+
+theorem wPair_open (d : ℕ) : wPair ![Td d, Pd d] = pair d := by
+  funext a; exact (pair_eq d a).symm
 
 variable {dx dy dz dw}
 
@@ -106,56 +121,57 @@ theorem norm_prod3_eq_one {a b c : ℕ} {u : Hd a} {v : Hd b} {w : Hd c} (hu : �
   rw [prod3_eq_eX]
   exact norm_prodAlong_eq_one _ hu (norm_prodAlong_eq_one _ hv hw)
 
-variable {u : Hd dx} {v : Hd dy} {w : Hd dz} {s : Hd dw}
+variable {u : Hd dx} {v : Hd dy} {w : Hd dz} {s : Hd dw} (M : Fin 2 → Matrix (Fin dw) (Fin dw) ℂ)
   (hu : ‖u‖ = 1) (hv : ‖v‖ = 1) (hw : ‖w‖ = 1) (hs : ‖s‖ = 1)
 
 section Centered
 
 include hv hw hs in
 theorem centered_x (a : Fin 2) :
-    centeredG (pairs4 dx dy dz dw (a, 0)) (prod4 u v w s) =
+    centeredG (boxPairs dx dy dz dw M (a, 0)) (prod4 u v w s) =
       prod4 (centeredG (pair dx a) u) v w s := by
-  rw [show pairs4 dx dy dz dw (a, 0) = Matrix.toEuclideanLin (liftAlong (eX dx dy dz dw)
+  rw [show boxPairs dx dy dz dw M (a, 0) = Matrix.toEuclideanLin (liftAlong (eX dx dy dz dw)
     (![Td dx, Pd dx] a)) from rfl, pair_eq, prod4_eq_eX,
     centeredG_lift _ (norm_prod3_eq_one hv hw hs), ← prod4_eq_eX]
 
 include hu hw hs in
 theorem centered_y (a : Fin 2) :
-    centeredG (pairs4 dx dy dz dw (a, 1)) (prod4 u v w s) =
+    centeredG (boxPairs dx dy dz dw M (a, 1)) (prod4 u v w s) =
       prod4 u (centeredG (pair dy a) v) w s := by
-  rw [show pairs4 dx dy dz dw (a, 1) = Matrix.toEuclideanLin (liftAlong (eY dx dy dz dw)
+  rw [show boxPairs dx dy dz dw M (a, 1) = Matrix.toEuclideanLin (liftAlong (eY dx dy dz dw)
     (![Td dy, Pd dy] a)) from rfl, pair_eq, prod4_eq_eY,
     centeredG_lift _ (norm_prod3_eq_one hu hw hs), ← prod4_eq_eY]
 
 include hu hv hs in
 theorem centered_z (a : Fin 2) :
-    centeredG (pairs4 dx dy dz dw (a, 2)) (prod4 u v w s) =
+    centeredG (boxPairs dx dy dz dw M (a, 2)) (prod4 u v w s) =
       prod4 u v (centeredG (pair dz a) w) s := by
-  rw [show pairs4 dx dy dz dw (a, 2) = Matrix.toEuclideanLin (liftAlong (eZ dx dy dz dw)
+  rw [show boxPairs dx dy dz dw M (a, 2) = Matrix.toEuclideanLin (liftAlong (eZ dx dy dz dw)
     (![Td dz, Pd dz] a)) from rfl, pair_eq, prod4_eq_eZ,
     centeredG_lift _ (norm_prod3_eq_one hu hv hs), ← prod4_eq_eZ]
 
 include hu hv hw in
 theorem centered_w (a : Fin 2) :
-    centeredG (pairs4 dx dy dz dw (a, 3)) (prod4 u v w s) =
-      prod4 u v w (centeredG (pair dw a) s) := by
-  rw [show pairs4 dx dy dz dw (a, 3) = Matrix.toEuclideanLin (liftAlong (eW dx dy dz dw)
-    (![Td dw, Pd dw] a)) from rfl, pair_eq, prod4_eq_eW,
+    centeredG (boxPairs dx dy dz dw M (a, 3)) (prod4 u v w s) =
+      prod4 u v w (centeredG (wPair M a) s) := by
+  rw [show boxPairs dx dy dz dw M (a, 3) = Matrix.toEuclideanLin (liftAlong (eW dx dy dz dw)
+    (M a)) from rfl, wPair, prod4_eq_eW,
     centeredG_lift _ (norm_prod3_eq_one hu hv hw), ← prod4_eq_eW]
 
 end Centered
 
-include hu hv hw hs
+variable {M} (hM : ∀ a, (M a).IsHermitian)
+include hu hv hw hs hM
 
 /-- The centered vectors of the box at a product state, axis by axis. -/
-theorem inner_centered_pairs4 (a b : Fin 2) (i j : Fin 4) :
-    inner ℂ (centeredG (pairs4 dx dy dz dw (a, i)) (prod4 u v w s))
-        (centeredG (pairs4 dx dy dz dw (b, j)) (prod4 u v w s)) =
+theorem inner_centered_box (a b : Fin 2) (i j : Fin 4) :
+    inner ℂ (centeredG (boxPairs dx dy dz dw M (a, i)) (prod4 u v w s))
+        (centeredG (boxPairs dx dy dz dw M (b, j)) (prod4 u v w s)) =
       if i = j then
         ![inner ℂ (centeredG (pair dx a) u) (centeredG (pair dx b) u),
           inner ℂ (centeredG (pair dy a) v) (centeredG (pair dy b) v),
           inner ℂ (centeredG (pair dz a) w) (centeredG (pair dz b) w),
-          inner ℂ (centeredG (pair dw a) s) (centeredG (pair dw b) s)] i
+          inner ℂ (centeredG (wPair M a) s) (centeredG (wPair M b) s)] i
       else 0 := by
   have ul a := inner_self_centeredG (pair_isSymmetric dx a) hu
   have ur a := inner_centeredG_self (pair_isSymmetric dx a) hu
@@ -163,34 +179,57 @@ theorem inner_centered_pairs4 (a b : Fin 2) (i j : Fin 4) :
   have vr a := inner_centeredG_self (pair_isSymmetric dy a) hv
   have wl a := inner_self_centeredG (pair_isSymmetric dz a) hw
   have wr a := inner_centeredG_self (pair_isSymmetric dz a) hw
-  have sl a := inner_self_centeredG (pair_isSymmetric dw a) hs
-  have sr a := inner_centeredG_self (pair_isSymmetric dw a) hs
+  have hW a : (wPair M a).IsSymmetric := Matrix.isSymmetric_toEuclideanLin_iff.mpr (hM a)
+  have sl a := inner_self_centeredG (hW a) hs
+  have sr a := inner_centeredG_self (hW a) hs
   fin_cases i <;> fin_cases j <;>
-    simp [centered_x hv hw hs, centered_y hu hw hs, centered_z hu hv hs, centered_w hu hv hw,
+    simp [centered_x M hv hw hs, centered_y M hu hw hs, centered_z M hu hv hs,
+      centered_w M hu hv hw,
       inner_prod4, ul, ur, vl, vr, wl, wr, sl, sr, hu, hv, hw, hs]
+
+/-- On a product state `Σ` is block diagonal, one `2 × 2` block per axis, for any pair on `w`. -/
+theorem covMatrix_box :
+    covMatrix (boxPairs dx dy dz dw M) (prod4 u v w s) =
+      blockDiagonal ![covMatrix (pair dx) u, covMatrix (pair dy) v, covMatrix (pair dz) w,
+        covMatrix (wPair M) s] := by
+  ext ⟨a, i⟩ ⟨b, j⟩
+  simp only [covMatrix, of_apply, blockDiagonal_apply, covarianceG,
+    inner_centered_box hu hv hw hs hM]
+  split_ifs with h
+  · subst h; fin_cases i <;> rfl
+  · rfl
+
+/-- On a product state `Ω` is block diagonal, one `2 × 2` block per axis, for any pair on `w`. -/
+theorem imMatrix_box :
+    imMatrix (boxPairs dx dy dz dw M) (prod4 u v w s) =
+      blockDiagonal ![imMatrix (pair dx) u, imMatrix (pair dy) v, imMatrix (pair dz) w,
+        imMatrix (wPair M) s] := by
+  ext ⟨a, i⟩ ⟨b, j⟩
+  simp only [imMatrix, of_apply, blockDiagonal_apply, inner_centered_box hu hv hw hs hM]
+  split_ifs with h
+  · subst h; fin_cases i <;> rfl
+  · rfl
+
+omit hM
+
+omit hu hv hw hs in
+theorem open_isHermitian (d : ℕ) : ∀ a, (![Td d, Pd d] a).IsHermitian := by
+  intro a; fin_cases a
+  exacts [Td_isHermitian d, Pd_isHermitian d]
 
 /-- On a product state `Σ` is block diagonal, one `2 × 2` block per axis. -/
 theorem covMatrix_prod4 :
     covMatrix (pairs4 dx dy dz dw) (prod4 u v w s) =
       blockDiagonal ![covMatrix (pair dx) u, covMatrix (pair dy) v, covMatrix (pair dz) w,
         covMatrix (pair dw) s] := by
-  ext ⟨a, i⟩ ⟨b, j⟩
-  simp only [covMatrix, of_apply, blockDiagonal_apply, covarianceG,
-    inner_centered_pairs4 hu hv hw hs]
-  split_ifs with h
-  · subst h; fin_cases i <;> rfl
-  · rfl
+  rw [covMatrix_box hu hv hw hs (open_isHermitian dw), wPair_open]
 
 /-- On a product state `Ω` is block diagonal, one `2 × 2` block per axis. -/
 theorem imMatrix_prod4 :
     imMatrix (pairs4 dx dy dz dw) (prod4 u v w s) =
       blockDiagonal ![imMatrix (pair dx) u, imMatrix (pair dy) v, imMatrix (pair dz) w,
         imMatrix (pair dw) s] := by
-  ext ⟨a, i⟩ ⟨b, j⟩
-  simp only [imMatrix, of_apply, blockDiagonal_apply, inner_centered_pairs4 hu hv hw hs]
-  split_ifs with h
-  · subst h; fin_cases i <;> rfl
-  · rfl
+  rw [imMatrix_box hu hv hw hs (open_isHermitian dw), wPair_open]
 
 omit hu hv hw hs
 
