@@ -92,3 +92,8 @@ import NRS3Hopf
 #print axioms BoxExcess.boxExcess_three
 #print axioms BoxExcess.det_covMatrix_cube_maxCurrent
 #print axioms BoxExcess.det_covMatrix_box_maxCurrent
+#print axioms SlTwoIdentity.p₁_open
+#print axioms SlTwoIdentity.p₂_open
+#print axioms SlTwoIdentity.p₁_closed
+#print axioms SlTwoIdentity.p₂_closed
+#print axioms SlTwoIdentity.eq_zero_of_p_closed

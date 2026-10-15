@@ -17,3 +17,4 @@ public import NRS3Hopf.RobertsonCoupling
 public import NRS3Hopf.BoxEquality
 public import NRS3Hopf.StackedFibers
 public import NRS3Hopf.BoxExcess
+public import NRS3Hopf.SlTwoIdentity
