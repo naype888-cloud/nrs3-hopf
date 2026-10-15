@@ -44,3 +44,12 @@ import NRS3Hopf
 #print axioms ClosedAxis.gramDefectAt_seamState
 #print axioms ClosedAxis.ratio_seamState
 #print axioms ClosedAxis.tendsto_speed_seamState
+#print axioms FourAxes.covMatrix_box
+#print axioms FourAxes.imMatrix_box
+#print axioms CubeInBox.covMatrix_xyz
+#print axioms CubeInBox.imMatrix_xyz
+#print axioms CubeInBox.det_covMatrix_box
+#print axioms CubeInBox.abs_det_imMatrix_box
+#print axioms CubeInBox.robertson_det_box_strict
+#print axioms CubeInBox.cube_three_saturates
+#print axioms CubeInBox.cube_saturates_box_strict

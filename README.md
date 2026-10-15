@@ -78,6 +78,21 @@ Cada sistema fija su propia `c`; esta es la del eje cerrado. Al crecer el eje, e
 costura llega a esa `c` con razón de incertidumbre `√2` para todo `d`: el cuanto `√2 − 1` no se
 cierra en el límite.
 
+## El cubo dentro de la caja: los cristales de 3 ejes caben en la caja de 4
+
+Los 6 observables de `x`, `y`, `z` dentro de la caja de 4 ejes, con cualquier par en el cuarto
+eje `w`. En estados producto:
+
+| Enunciado | Lean |
+|---|---|
+| `Σ` y `Ω` de `x`, `y`, `z` son los del cubo, lleve lo que lleve el cuarto eje | `CubeInBox.covMatrix_xyz`, `CubeInBox.imMatrix_xyz` |
+| los determinantes se factorizan: `det Σ₈ = det Σ₆ · det Σ_w`, `\|det Ω₈\| = \|det Ω₆\| · \|det Ω_w\|` | `det_covMatrix_box`, `abs_det_imMatrix_box` |
+| con `w` cerrado de 3 posiciones en su banda, Robertson es estricto en toda la caja si `det Σ₆ > 0` | `robertson_det_box_strict` |
+| el cubo `3 × 3 × 3` en corriente máxima satura (`det Σ₆ = \|det Ω₆\| = 1/64`) | `cube_three_saturates` |
+| **el cubo satura y la caja no**: con `w` cerrado en su corriente máxima, la caja es estricta | `cube_saturates_box_strict` |
+
+El cuarto eje no rompe nada de lo que se ve en `x`, `y`, `z`; solo puede agregar cuanto.
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es
