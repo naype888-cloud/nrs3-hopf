@@ -31,3 +31,4 @@ public import NRS3Hopf.BoxNoState
 public import NRS3Hopf.SpinAxes
 public import NRS3Hopf.OpenNoRotation
 public import NRS3Hopf.RotationFiber
+public import NRS3Hopf.Gyroscope
