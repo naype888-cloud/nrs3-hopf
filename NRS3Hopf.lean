@@ -33,3 +33,5 @@ public import NRS3Hopf.OpenNoRotation
 public import NRS3Hopf.RotationFiber
 public import NRS3Hopf.Gyroscope
 public import NRS3Hopf.FiberedWheel
+public import NRS3Hopf.Cell16
+public import NRS3Hopf.BochnerCurvature
