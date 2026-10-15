@@ -57,3 +57,7 @@ import NRS3Hopf
 #print axioms ClosedAxisEntangled.exists_prodAlong_of_eigen
 #print axioms ClosedAxisEntangled.gramDefect_pos_of_band
 #print axioms ClosedAxisEntangled.gramDefect_box_pos
+#print axioms RobertsonEquality.exists_single_axis
+#print axioms RobertsonEquality.commutator_sum
+#print axioms RobertsonEquality.le_finrank_ker
+#print axioms RobertsonEquality.exists_sigma_of_det_eq

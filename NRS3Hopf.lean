@@ -10,3 +10,4 @@ public import NRS3Hopf.ClosedAxisQuantum
 public import NRS3Hopf.CubeInBox
 public import NRS3Hopf.ClosedAxisEntangled
 public import NRS3Hopf.RobertsonEqualityLines
+public import NRS3Hopf.RobertsonEquality

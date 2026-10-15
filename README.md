@@ -96,6 +96,21 @@ eje `w`. En estados producto:
 El cuarto eje no rompe nada de lo que se ve en `x`, `y`, `z`; solo puede agregar cuanto, y
 enredarlo con `x`, `y`, `z` no le quita su defecto (análogo de `D49e`).
 
+## Igualdad en Robertson 1934 con cualquier número de ejes
+
+`n` ejes, cada uno con su par de observables, que conmutan entre ejes distintos: el cubo de
+Tom (`n = 3`), la caja con la fibra cerrada (`n = 4`), una región de cristal en `n` direcciones.
+
+| Enunciado | Lean |
+|---|---|
+| `n` rectas contra dimensión `n` dejan un vector en cualquier eje elegido | `RobertsonEquality.exists_single_axis` |
+| `[L_a, L_b] = Σ_i σ_i(a, b) [A_{0,i}, A_{1,i}]` | `RobertsonEquality.commutator_sum` |
+| en la igualdad, el núcleo de `Σ + iΩ` tiene dimensión `≥ n` | `RobertsonEquality.le_finrank_ker` |
+| **un solo eje con defecto positivo** + `det Ω ≠ 0` + igualdad ⇒ `Σ_i σ_i [A_{0,i}, A_{1,i}] Φ = 0` con `σ ≠ 0` | `RobertsonEquality.exists_sigma_of_det_eq` |
+
+En la caja, ese eje puede ser la fibra cerrada oculta, que tiene defecto para todo estado en su
+banda (`ClosedAxisEntangled`).
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es
