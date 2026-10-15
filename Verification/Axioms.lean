@@ -74,3 +74,11 @@ import NRS3Hopf
 #print axioms ClosedAxisAlgebra.lift_PC
 #print axioms BoxCommute.boxPairs_comm
 #print axioms BoxEquality.exists_sigma_of_det_eq
+#print axioms StackedFibers.inner_prodK
+#print axioms StackedFibers.covMatrix_prodK
+#print axioms StackedFibers.det_covMatrix_prodK
+#print axioms StackedFibers.abs_det_imMatrix_prodK
+#print axioms StackedFibers.det_replicate
+#print axioms StackedFibers.one_lt_closedFactor
+#print axioms StackedFibers.closed_stack
+#print axioms StackedFibers.tendsto_closedFactor_pow

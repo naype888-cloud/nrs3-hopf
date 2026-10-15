@@ -126,6 +126,21 @@ banda (`ClosedAxisEntangled`):
 | `T°` es invertible: el transporte no anula ningún estado | `eq_zero_of_Tc` |
 | en un producto, enredado o no, `T°` y `[P₃, [T°, P₃]]` no anulan ningún estado | `eq_zero_of_lift_Tc`, `eq_zero_of_lift_PC` |
 
+## El cuanto se multiplica: `k` fibras apiladas
+
+`k` copias de un eje, cada una con su par, en `ℂ^(Fin k → Fin d)`. En un estado producto:
+
+| Enunciado | Lean |
+|---|---|
+| los productos internos se factorizan por copia | `StackedFibers.inner_prodK` |
+| `Σ` y `Ω` son diagonales por bloques, un bloque por copia | `covMatrix_prodK`, `imMatrix_prodK` |
+| `det Σ = Π_i det Σ_i`, `\|det Ω\| = Π_i \|det Ω_i\|` | `det_covMatrix_prodK`, `abs_det_imMatrix_prodK` |
+| una fibra cerrada en su corriente máxima tiene factor `F = det Σ_w / \|det Ω_w\| > 1` | `one_lt_closedFactor` |
+| **`k` fibras cerradas: `det Σ = F^k · \|det Ω\|`**, exponencial en el número de fibras | `closed_stack`, `tendsto_closedFactor_pow` |
+
+Lo que crece es el cuanto, no la velocidad: cada eje sigue acotado por su propia `c`
+(`tension_lift_le`, `D37c`).
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es
