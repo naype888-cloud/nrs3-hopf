@@ -17,7 +17,8 @@ So `[P_d, T_d]` multiplies each step by `±h`, and
 
   `[P_d, [P_d, T_d]] = h² T_d`
 
-on every open axis, for every `d`, and so in the Szegő limit.
+on every open axis, for every `d`, and so in the Szegő limit (`LieClosure.commutator_P_C`,
+`D49i`).
 
 On the closed axis with three positions no basis `Y₁ = αT° + βP₃`, `Y₂ = γT° + δP₃` of the plane
 of `T°`, `P₃` satisfies `[Y₂, [Y₂, Y₁]] = c Y₁`, for any `c`: the entries force `γΔ = 0` and
@@ -42,30 +43,11 @@ variable {d : ℕ}
 /-- **Equal steps**: `[P_d, [P_d, T_d]] = h² T_d`, `h = 2/(d − 1)`, for every `d`. -/
 theorem lie_Pd_Pd_Td :
     ⁅Pd d, ⁅Pd d, Td d⁆⁆ = ((2 : ℂ) / ((d : ℂ) - 1)) ^ 2 • Td d := by
-  ext i j
-  simp only [Ring.lie_def, Matrix.sub_apply, Pd_mul_apply, mul_Pd_apply, Matrix.smul_apply,
-    smul_eq_mul]
-  by_cases h : MinStep i j
-  · have hd : (posCoord d i : ℂ) - posCoord d j = 2 / ((d : ℂ) - 1) ∨
-        (posCoord d i : ℂ) - posCoord d j = -(2 / ((d : ℂ) - 1)) := by
-      simp only [posCoord]
-      push_cast
-      rcases h with h | h
-      · right
-        rw [show (j.val : ℂ) = i.val + 1 by exact_mod_cast h.symm]
-        ring
-      · left
-        rw [show (i.val : ℂ) = j.val + 1 by exact_mod_cast h.symm]
-        ring
-    have key : (posCoord d i : ℂ) * ((posCoord d i : ℂ) * Td d i j - Td d i j * posCoord d j) -
-        ((posCoord d i : ℂ) * Td d i j - Td d i j * posCoord d j) * posCoord d j =
-        ((posCoord d i : ℂ) - posCoord d j) ^ 2 * Td d i j := by ring
-    rw [key]
-    rcases hd with hd | hd
-    · rw [hd]
-    · rw [hd]; ring
-  · have h0 : Td d i j = 0 := by simp [Td, Ad, h]
-    simp [h0]
+  have h := commutator_P_C (d := d)
+  rw [show ⁅Pd d, ⁅Pd d, Td d⁆⁆ = -(Pd d * C d - C d * Pd d) by
+    simp only [Ring.lie_def, C]; noncomm_ring, h, neg_smul, neg_neg]
+  push_cast
+  rfl
 
 /-! ## The closed axis breaks it -/
 
