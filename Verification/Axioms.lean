@@ -112,3 +112,6 @@ import NRS3Hopf
 #print axioms NRSCell16.tension_sq_le
 #print axioms NRSCell16.tension_max
 #print axioms NRSCell16.defect_pos
+#print axioms Cell16Reflection.covariance_eq_zero_of_reverse
+#print axioms Cell16Reflection.reflect_psiK
+#print axioms Cell16Reflection.covariance_psiK

@@ -37,3 +37,4 @@ public import NRS3Hopf.Cell16
 public import NRS3Hopf.Cell16Symmetry
 public import NRS3Hopf.BochnerCurvature
 public import NRS3Hopf.NRSCell16
+public import NRS3Hopf.Cell16Reflection
