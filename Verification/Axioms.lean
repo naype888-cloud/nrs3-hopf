@@ -99,3 +99,16 @@ import NRS3Hopf
 #print axioms SlTwoIdentity.eq_zero_of_p_closed
 #print axioms BoxTwoRelations.lam_lie
 #print axioms BoxTwoRelations.eq_zero_of_relations
+#print axioms Cell16.euler
+#print axioms Cell16.link_counts
+#print axioms Cell16.isAut_iff
+#print axioms Cell16.card_aut
+#print axioms Cell16.signedPerm_transitive
+#print axioms BochnerCurvature.gamma_eq_lie
+#print axioms BochnerCurvature.gam2_comp
+#print axioms BochnerCurvature.cell16_curvature
+#print axioms BochnerCurvature.cell16_sharp
+#print axioms NRSCell16.Bz_cube
+#print axioms NRSCell16.tension_sq_le
+#print axioms NRSCell16.tension_max
+#print axioms NRSCell16.defect_pos

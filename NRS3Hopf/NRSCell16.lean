@@ -209,8 +209,21 @@ def pz (p : Pt) : ℤ := if p.1 = k then (if p.2 then 1 else -1) else 0
 /-- The integer matrix `B = 6 [T, P_k]`. -/
 def Bz : Matrix Pt Pt ℤ := of fun u v => if u.1 ≠ v.1 then pz k v - pz k u else 0
 
+/-- The swap of the axes `x` and `k`, a symmetry of the 16-cell. -/
+def axisSwap : Equiv.Perm Pt := signedPerm (Equiv.swap 0 k) fun _ => false
+
+/-- `B` on axis `k` is `B` on axis `x` read through the swap of the axes. -/
+theorem Bz_axisSwap : Bz k = (Bz 0).submatrix (axisSwap k) (axisSwap k) := by
+  ext u v
+  simp only [Bz, pz, axisSwap, submatrix_apply, signedPerm_apply, of_apply, Bool.false_xor, ne_eq,
+    (Equiv.swap 0 k).injective.eq_iff, Equiv.swap_apply_eq_iff, Equiv.swap_apply_left]
+
+/-- **`B³ = −12 B`** on every axis: checked once on the axis `x`, and carried to the axis `k`
+by the swap of the axes. -/
 theorem Bz_cube : Bz k * Bz k * Bz k = (-12 : ℤ) • Bz k := by
-  fin_cases k <;> decide
+  have h0 : Bz 0 * Bz 0 * Bz 0 = (-12 : ℤ) • Bz 0 := by decide
+  rw [Bz_axisSwap, submatrix_mul_equiv, submatrix_mul_equiv, h0]
+  rfl
 
 theorem comm_eq : Tm * Pm k - Pm k * Tm = (1 / 6 : ℂ) • (Bz k).map (Int.cast : ℤ → ℂ) := by
   ext ⟨a, s⟩ ⟨b, t⟩
