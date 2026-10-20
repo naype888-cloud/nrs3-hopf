@@ -146,6 +146,21 @@ banda (`ClosedAxisEntangled`):
 Lo que crece es el cuanto, no la velocidad: cada eje sigue acotado por su propia `c`
 (`tension_lift_le`, `D37c`).
 
+## El cono en la caja con la fibra cerrada
+
+Cada eje de la caja lleva su vector de incertidumbre `v` (`coneVector` de `nrs3-uncertainty-cone`).
+Lo medible es el cono: para todo estado y todo eje, `v` cae en el cono futuro cerrado, y nada es
+espacial. El intervalo `η(v, v)` es el defecto de Robertson–Schrödinger del eje, así que el tiempo
+propio `τ = √η(v, v)` es la distancia al borde del cono: el cuanto que no se puede resolver. En la
+banda, con la fibra `w` cerrada, `τ > 0` en los cuatro ejes, esté entrelazado el estado o no.
+
+| Enunciado | Lean |
+|---|---|
+| todo eje de todo estado cae en el cono futuro cerrado | `BoxCone.axisVector_mem_futureCone` |
+| el intervalo de un eje es su defecto de Robertson–Schrödinger | `BoxCone.interval_axisVector` |
+| en la banda, con la fibra cerrada, los cuatro ejes son estrictamente temporales | `BoxCone.timelike_box_of_band` |
+| el cuanto irresoluble es un tiempo propio positivo en cada eje | `BoxCone.properTime_box_pos_of_band` |
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es

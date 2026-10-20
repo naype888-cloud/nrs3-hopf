@@ -115,3 +115,7 @@ import NRS3Hopf
 #print axioms Cell16Reflection.covariance_eq_zero_of_reverse
 #print axioms Cell16Reflection.reflect_psiK
 #print axioms Cell16Reflection.covariance_psiK
+#print axioms BoxCone.axisVector_mem_futureCone
+#print axioms BoxCone.interval_axisVector
+#print axioms BoxCone.timelike_box_of_band
+#print axioms BoxCone.properTime_box_pos_of_band
