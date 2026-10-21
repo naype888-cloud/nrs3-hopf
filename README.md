@@ -14,6 +14,8 @@ cada uno por su lado (Szegő, `D8`; monotonía, `D9`).
 **[▶ Pruébalo: x, y, z abiertos con la fibra w cerrada, los determinantes y la banda](https://naype888-cloud.github.io/nrs3-hopf/)**
 (local: `docs/index.html`)
 
+**[▶ Same on T³: three closed axes, no fibre](https://naype888-cloud.github.io/nrs3-hopf/t3.html)**
+
 Lean 4 sobre [`nrs3-uncertainty-cone`](https://github.com/naype888-cloud/nrs3-uncertainty-cone)
 y [`nava-robertson-schrodinger`](https://github.com/naype888-cloud/nava-robertson-schrodinger)
 (D49c es el caso de tres ejes).

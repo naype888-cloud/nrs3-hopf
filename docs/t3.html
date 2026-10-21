@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NRS³·T³ · Hopf — three closed axes, no fibre</title>
+<meta name="description" content="Robertson 1934 on T³: det Σ / |det Ω| = (C°x C°y C°z)², never 1, tending to 8; the three rings in the light sphere with a random walk.">
+<script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-core.js?v=20261020d"></script>
+<script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-t3.js?v=20261020d"></script>
+<style>
+  :root { --bg:#fcfcfb; --panel:#fff; --ink:#0b0b0b; --ink2:#52514e; --muted:#8a8985; --grid:#e4e3df; --blue:#2a78d6; --orange:#eb6834; --red:#c0392b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#111110; --panel:#191918; --ink:#f2f1ee; --ink2:#c4c3bf; --grid:#2c2b29; --blue:#5b9be6; --orange:#f08a5d; --red:#e07a6c; } }
+  :root[data-theme="dark"] { --bg:#111110; --panel:#191918; --ink:#f2f1ee; --ink2:#c4c3bf; --grid:#2c2b29; --blue:#5b9be6; --orange:#f08a5d; --red:#e07a6c; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:24px 16px 40px; }
+  h1 { font-size:1.45rem; margin:0 0 4px; font-weight:650; } h2 { font-size:1.1rem; margin:26px 0 8px; font-weight:620; }
+  .lead,.note { color:var(--ink2); max-width:860px; } .note { font-size:.9rem; }
+  .theme,button { font:inherit; font-size:.9rem; padding:6px 12px; border-radius:999px; border:1px solid var(--grid); background:var(--panel); color:var(--ink); cursor:pointer; }
+  .theme { float:right; font-size:.8rem; }
+  .card { background:var(--panel); border:1px solid var(--grid); border-radius:10px; padding:12px; }
+  .controls { display:grid; grid-template-columns:auto 1fr 1fr 1fr; gap:10px 18px; align-items:center; margin-bottom:10px; }
+  @media (max-width:700px) { .controls { grid-template-columns:1fr; } }
+  .sl { display:flex; gap:10px; align-items:center; font-variant-numeric:tabular-nums; } .sl input { flex:1; min-width:0; accent-color:var(--blue); } .sl b { min-width:2.5em; text-align:right; }
+  canvas { width:100%; display:block; aspect-ratio:16/10; touch-action:none; }
+  .readout { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:10px; } @media (max-width:560px) { .readout { grid-template-columns:repeat(2,1fr); } }
+  .stat { background:var(--panel); border:1px solid var(--grid); border-radius:8px; padding:8px 10px; } .stat .k { font-size:.78rem; color:var(--muted); } .stat .v { font-size:1.05rem; font-variant-numeric:tabular-nums; }
+  .tw { overflow-x:auto; } table { border-collapse:collapse; font-size:.9rem; min-width:640px; } th,td { border:1px solid var(--grid); padding:6px 10px; text-align:left; vertical-align:top; } th { color:var(--ink2); }
+  code { font-size:.88em; } a { color:var(--blue); } footer { color:var(--muted); font-size:.85rem; margin-top:28px; }
+  .leg span { margin-right:14px; font-size:.85rem; color:var(--ink2); } .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; }
+</style>
+</head>
+<body>
+<main>
+  <button class="theme" id="theme" type="button">Theme</button>
+  <h1>NRS³·T³ · Hopf: three closed axes, no fibre</h1>
+  <p class="lead">The Hopf page puts a closed fibre <code>w</code> on top of an open cube. Here the three axes x, y, z are themselves closed, so the quantum
+    that the fibre added is already in each axis, and the page has the same determinants without a fourth axis. At maximal current,
+    <code>det Σ / |det Ω| = (C°(dx) C°(dy) C°(dz))²</code> (product states, six observables). The open cube equals 1 exactly when every axis has 2 or 3 positions
+    (<code>3×3×3</code> saturates); on T³ a ring of 3 already has <code>C°² = 5/4</code>, so no box saturates. Each ring tends to 2, the box to <code>8</code>, and no finite box reaches it.</p>
+
+  <h2>The determinants</h2>
+  <div class="card">
+    <div class="controls">
+      <span></span>
+      <label class="sl">dx<input id="gx" type="range" min="3" max="30" value="3"><b id="vgx">3</b></label>
+      <label class="sl">dy<input id="gy" type="range" min="3" max="30" value="3"><b id="vgy">3</b></label>
+      <label class="sl">dz<input id="gz" type="range" min="3" max="30" value="3"><b id="vgz">3</b></label>
+    </div>
+    <div class="tw"><table>
+      <tr><th></th><th>open cube (cone, D49c)</th><th>T³ (rings)</th></tr>
+      <tr><th>det Σ / |det Ω|</th><td id="o1">–</td><td id="r1">–</td></tr>
+      <tr><th>per axis C²</th><td id="o2">–</td><td id="r2">–</td></tr>
+      <tr><th>limit</th><td>C∞⁶ = (π²/3 − 2)³ ≈ 2.2</td><td>2³ = 8</td></tr>
+      <tr><th>saturates (= 1)?</th><td id="o3">–</td><td>never: each ring ≥ 5/4 (d = 3)</td></tr>
+    </table></div>
+    <p class="note">Open column: Lean <code>CoherenceConstantInf</code> and <code>det_eq_iff</code> (nrs3-hopf, three axes as the sub-case of the box). Ring column: the axis ratio tends to 2 (<code>RingSzego.tendsto_det_ratio_cState</code>);
+      the product over three axes is the same factorisation as <code>det_covMatrix_prod</code> in product states. The per-size numbers are computed on this page from the maximal-current state.</p>
+  </div>
+
+  <h2>The three rings in the light sphere</h2>
+  <div class="card">
+    <p class="lead" style="margin:0 0 8px">Each ring is a point inside the unit sphere (x blue, y orange, z grey). Random walk: the three states take small random steps and the light decays. Drag to rotate.</p>
+    <div class="controls" style="grid-template-columns:auto 1fr"><button type="button" id="walk" aria-pressed="false">✦ Random walk (auto)</button><span></span></div>
+    <canvas id="sphere" aria-label="Three rings inside the light sphere"></canvas>
+    <div class="readout" aria-live="polite">
+      <div class="stat"><div class="k">x: light β²</div><div class="v" id="wx">–</div></div>
+      <div class="stat"><div class="k">y: light β²</div><div class="v" id="wy">–</div></div>
+      <div class="stat"><div class="k">z: light β²</div><div class="v" id="wz">–</div></div>
+      <div class="stat"><div class="k">steps</div><div class="v" id="wn">0</div></div>
+    </div>
+  </div>
+
+  <h2>What is not here</h2>
+  <p class="note">A fourth axis <code>w</code> is not part of T³. The Hopf reading of <code>w</code> as the fibre of physical space is a declared bridge (a premise) in the repository, not a theorem, and this page does not use it.
+    In Lean the closed axis <code>d = 3</code> keeps its band and proper time (<code>ClosedThreeBand</code>), the ring limit is <code>RingSzego</code>, and the cube inside the box is untouched by what <code>w</code> carries (<code>CubeInBox</code>).</p>
+  <footer>NRS Noncommercial License 1.0.0 · <a href="https://github.com/naype888-cloud/nrs3-hopf">github.com/naype888-cloud/nrs3-hopf</a></footer>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id), C = Cone, R = Cone.ring, css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const ds = () => ["gx", "gy", "gz"].map((i) => +$(i).value);
+  function table() {
+    const d = ds(); ["x", "y", "z"].forEach((a, i) => $("vg" + a).textContent = d[i]);
+    const co = d.map((n) => C.CNava(n) ** 2), cr = d.map((n) => R.CNava(n) ** 2);
+    const p = (v) => v.reduce((x, y) => x * y, 1);
+    $("o1").textContent = p(co).toFixed(4); $("r1").textContent = p(cr).toFixed(4);
+    $("o2").textContent = co.map((v) => v.toFixed(3)).join(" · "); $("r2").textContent = cr.map((v) => v.toFixed(3)).join(" · ");
+    $("o3").textContent = d.every((n) => n <= 3) ? "yes (all axes 2 or 3)" : "no";
+  }
+  ["gx", "gy", "gz"].forEach((i) => $(i).addEventListener("input", () => { table(); set(false); })); 
+  const view = { yaw: -0.6, pitch: 0.5, user: false };
+  let sts = null, tr = [[], [], []], walking = false, n = 0, rng = null;
+  const fresh = () => { sts = ds().map((d, i) => R.state(d, 0, 1 + i, false)); tr = [[], [], []]; n = 0; };
+  const pt = (a) => [a.v[1] / a.v[0], a.v[2] / a.v[0], a.v[3] / a.v[0]];
+  function draw() {
+    const { g, w, h } = C.setup($("sphere")), P = C.projector(w, h, view, 0.36, 0), grid = css("--grid"), muted = css("--muted");
+    const ring = (f) => { const p = []; for (let t = 0; t <= 72; t++) p.push(f(t * Math.PI / 36)); return p; };
+    for (const f of [(a) => [Math.cos(a), Math.sin(a), 0], (a) => [Math.cos(a), 0, Math.sin(a)], (a) => [0, Math.cos(a), Math.sin(a)]]) C.poly(g, P, ring(f), C.mix(css("--red"), 0.5), 1.2);
+    C.line(g, P, [-1.2, 0, 0], [1.2, 0, 0], grid); C.line(g, P, [0, -1.2, 0], [0, 1.2, 0], grid); C.line(g, P, [0, 0, -1.2], [0, 0, 1.2], grid);
+    C.label(g, P, [1.25, 0, 0], "Re⟪x,y⟫", muted); C.label(g, P, [0, 1.25, 0], "Im⟪x,y⟫", muted); C.label(g, P, [0, 0, 1.25], "ΔVar", muted);
+    if (!sts) fresh();
+    sts.forEach((s, i) => { const a = R.analyse(ds()[i], s), col = css(["--blue", "--orange", "--ink2"][i]), u = pt(a);
+      if (tr[i].length > 1) C.poly(g, P, tr[i], C.mix(col, 0.5), 1.4); C.line(g, P, [0, 0, 0], u, col, 2); C.dot(g, P, u, 6, col); C.label(g, P, u, "xyz"[i], css("--ink"), 8, -8, "600 12px system-ui");
+      $("w" + "xyz"[i]).textContent = a.light.toFixed(4); });
+    $("wn").textContent = n;
+  }
+  function step() {
+    if (!walking) return;
+    sts = sts.map((s) => R.step(s, 0.05, rng)); n++;
+    sts.forEach((s, i) => { tr[i].push(pt(R.analyse(ds()[i], s))); if (tr[i].length > 120) tr[i].shift(); });
+    draw(); setTimeout(() => requestAnimationFrame(step), 40);
+  }
+  function set(on) { walking = on; $("walk").setAttribute("aria-pressed", on); $("walk").textContent = on ? "❚❚ Stop" : "✦ Random walk (auto)";
+    fresh(); if (on) { rng = C.rng((Math.random() * 1e9) | 0); step(); } else draw(); }
+  $("walk").addEventListener("click", () => set(!walking));
+  C.view3d($("sphere"), view, draw);
+  (function spin() { if (!view.user) { view.yaw += 0.0025; draw(); } requestAnimationFrame(spin); })();
+  $("theme").addEventListener("click", () => { const r = document.documentElement, dk = matchMedia("(prefers-color-scheme: dark)").matches;
+    r.dataset.theme = (r.dataset.theme || (dk ? "dark" : "light")) === "dark" ? "light" : "dark"; setTimeout(draw, 0); });
+  window.addEventListener("resize", draw); table(); draw();
+})();
+</script>
+</body>
+</html>
