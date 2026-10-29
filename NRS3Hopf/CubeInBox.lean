@@ -22,7 +22,7 @@ axis `w`. On a product state `u ⊗ v ⊗ w ⊗ s`:
 With the fourth axis closed with three positions (`ClosedThree`) and its state in the band, its
 factor is strictly above `1`: Robertson 1934 is strict on the whole box as soon as the cube has
 `det Σ₆ > 0`, even when the cube itself saturates. At `3 × 3 × 3` the maximal current state of
-the cube saturates (`D49c`, `C_Nava(3) = 1`); with a closed fourth axis in its band the box is
+the cube saturates (`D49c`, `C_N(3) = 1`); with a closed fourth axis in its band the box is
 strict.
 
 ## Main results

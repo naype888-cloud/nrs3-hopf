@@ -16,7 +16,7 @@ The closed fiber with three positions at its maximal current state has `Cov = 0`
 `F = 5/4`, and its excess is `δ_w = √F − 1 = (√5 − 2)/2`.
 
 On a product state the ratio of the box factors axis by axis (`CubeInBox.det_covMatrix_box`).
-With the excess `δ(d) = C_Nava(d) − 1` of each open axis (`D25`), the excess of the box
+With the excess `δ(d) = C_N(d) − 1` of each open axis (`D25`), the excess of the box
 `(1 + δ_x)(1 + δ_y)(1 + δ_z)(1 + δ_w) − 1` expands into the excesses of the axes, their products
 in pairs, the volumetric quantum `𝒱 = δ_x δ_y δ_z` (`D37e`), and the terms with `w`. So `𝒱` is
 the term of `x`, `y`, `z` inside the excess of the box, and the fiber enters only the terms with

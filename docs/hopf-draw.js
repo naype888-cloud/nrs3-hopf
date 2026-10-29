@@ -1,4 +1,4 @@
-// NRS³ · Hopf — estado compartido, cálculo de la caja y dibujo de los paneles.
+// RS^N³ · Hopf — estado compartido, cálculo de la caja y dibujo de los paneles.
 "use strict";
 const H = window.Hopf, DATA = window.HOPF_DATA;
 const $ = id => document.getElementById(id);

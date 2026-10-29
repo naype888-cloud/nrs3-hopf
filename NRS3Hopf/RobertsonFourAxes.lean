@@ -20,12 +20,12 @@ Robertson's relation `|det Ω| ≤ det Σ` holds for any finite family of observ
   `det Σ = Π (s_i + t_i²/4)`,  `|det Ω| = Π t_i²/4`,
 
 with `s_i` the Robertson–Schrödinger surplus and `t_i` the tension of axis `i`. At the maximal
-current state of the box every block carries `C_Nava(d)²`, so
+current state of the box every block carries `C_N(d)²`, so
 
-  `det Σ = (C_Nava(dx) C_Nava(dy) C_Nava(dz) C_Nava(dw))² · |det Ω|`.
+  `det Σ = (C_N(dx) C_N(dy) C_N(dz) C_N(dw))² · |det Ω|`.
 
 The ratio is `1` exactly when every axis has `2` or `3` positions, is strictly above `1` when
-every axis has `4` or more, stays strictly below `C_∞⁸ = (π²/3 − 2)⁴` and tends to it as the four
+every axis has `4` or more, stays strictly below `C_N-inf⁸ = (π²/3 − 2)⁴` and tends to it as the four
 axes grow (`D8`, `D9`).
 
 ## Main results
@@ -38,7 +38,7 @@ axes grow (`D8`, `D9`).
 - `RobertsonFourAxes.det_covMatrix_maxCurrentState4` : the ratio at the maximal current state.
 - `RobertsonFourAxes.det_eq_iff` : equality iff every axis has `2` or `3` positions.
 - `RobertsonFourAxes.robertson_det_maxCurrentState4_strict` : strict from `4` on every axis.
-- `RobertsonFourAxes.ratio_lt_inf`, `RobertsonFourAxes.tendsto_ratio` : below `C_∞⁸`, and the
+- `RobertsonFourAxes.ratio_lt_inf`, `RobertsonFourAxes.tendsto_ratio` : below `C_N-inf⁸`, and the
   limit.
 -/
 
@@ -125,7 +125,7 @@ theorem abs_det_imMatrix_maxCurrentState4_pos :
   have := h dx hx; have := h dy hy; have := h dz hz; have := h dw hw
   positivity
 
-/-- **The ratio at the maximal current state**: `det Σ = (Π C_Nava(d_i))² · |det Ω|`. -/
+/-- **The ratio at the maximal current state**: `det Σ = (Π C_N(d_i))² · |det Ω|`. -/
 theorem det_covMatrix_maxCurrentState4 :
     (covMatrix (pairs4 dx dy dz dw) (maxCurrentState4 dx dy dz dw)).det =
       (CoherenceConstant dx * CoherenceConstant dy * CoherenceConstant dz *
@@ -183,14 +183,14 @@ theorem robertson_det_maxCurrentState4_strict (hx : 4 ≤ dx) (hy : 4 ≤ dy) (h
   omega
 
 omit hx hy hz hw in
-/-- `C_∞⁸ = (π²/3 − 2)⁴`. -/
+/-- `C_N-inf⁸ = (π²/3 − 2)⁴`. -/
 theorem CoherenceConstantInf_pow_eight : CoherenceConstantInf ^ 8 = (Real.pi ^ 2 / 3 - 2) ^ 4 := by
   rw [show (8 : ℕ) = 2 * 4 from rfl, pow_mul, CoherenceConstantInf,
     Real.sq_sqrt (by nlinarith [Real.pi_gt_three])]
 
 omit hx hy hz hw in
 /-- **No box reaches the limit**: from `4` positions on every axis the ratio stays below
-`C_∞⁸`. -/
+`C_N-inf⁸`. -/
 theorem ratio_lt_inf (hx : 4 ≤ dx) (hy : 4 ≤ dy) (hz : 4 ≤ dz) (hw : 4 ≤ dw) :
     (CoherenceConstant dx * CoherenceConstant dy * CoherenceConstant dz *
       CoherenceConstant dw) ^ 2 < CoherenceConstantInf ^ 8 := by
@@ -211,7 +211,7 @@ theorem ratio_lt_inf (hx : 4 ≤ dx) (hy : 4 ≤ dy) (hz : 4 ≤ dz) (hw : 4 ≤
     _ = CoherenceConstantInf ^ 8 := by ring
 
 omit hx hy hz hw in
-/-- **The limit**: as the four axes grow, independently, the ratio tends to `C_∞⁸`. -/
+/-- **The limit**: as the four axes grow, independently, the ratio tends to `C_N-inf⁸`. -/
 theorem tendsto_ratio :
     Tendsto (fun p : ℕ × ℕ × ℕ × ℕ => (CoherenceConstant p.1 * CoherenceConstant p.2.1 *
         CoherenceConstant p.2.2.1 * CoherenceConstant p.2.2.2) ^ 2)

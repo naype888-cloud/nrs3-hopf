@@ -1,4 +1,4 @@
-// NRS³ · Hopf — núcleo numérico: x, y, z abiertos y la fibra w cerrada.
+// RS^N³ · Hopf — núcleo numérico: x, y, z abiertos y la fibra w cerrada.
 // Vectores complejos como arreglos de [re, im]. Todo se calcula en el navegador con las mismas
 // matrices que Lean: T_d = A_d / ρ_d y P_d en [−1, 1] en los ejes abiertos; T° = (J − I)/2 y
 // P₃ = diag(−1, 0, 1) en la fibra cerrada.

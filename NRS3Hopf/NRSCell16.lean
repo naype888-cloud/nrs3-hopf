@@ -9,7 +9,7 @@ public import NRS3Hopf.BochnerCurvature
 public import NavaRobertsonIndependent.Mathematics.D49_RobertsonDeterminant
 
 /-!
-# NRS on the closed fibered space: every axis keeps its defect
+# RS^N on the closed fibered space: every axis keeps its defect
 
 On the 16-cell (`Cell16`) transport moves to any of the six neighbours, `T = A/6`, and the
 position along axis `k` is its coordinate, `P_k = +1` at `+k`, `−1` at `−k`, `0` elsewhere. Every

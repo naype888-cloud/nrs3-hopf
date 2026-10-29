@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NRS³·T³ · Hopf — three closed axes, no fibre</title>
+<title>RS^N³·T³ · Hopf — three closed axes, no fibre</title>
 <meta name="description" content="Robertson 1934 on T³: det Σ / |det Ω| = (C°x C°y C°z)², never 1, tending to 8; the three rings in the light sphere with a random walk.">
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-core.js?v=20261020d"></script>
 <script src="https://naype888-cloud.github.io/nrs3-uncertainty-cone/cone-t3.js?v=20261020d"></script>
@@ -33,7 +33,7 @@
 <body>
 <main>
   <button class="theme" id="theme" type="button">Theme</button>
-  <h1>NRS³·T³ · Hopf: three closed axes, no fibre</h1>
+  <h1>RS^N³·T³ · Hopf: three closed axes, no fibre</h1>
   <p class="lead">The Hopf page puts a closed fibre <code>w</code> on top of an open cube. Here the three axes x, y, z are themselves closed, so the quantum
     that the fibre added is already in each axis, and the page has the same determinants without a fourth axis. At maximal current,
     <code>det Σ / |det Ω| = (C°(dx) C°(dy) C°(dz))²</code> (product states, six observables). The open cube equals 1 exactly when every axis has 2 or 3 positions
@@ -51,7 +51,7 @@
       <tr><th></th><th>open cube (cone, D49c)</th><th>T³ (rings)</th></tr>
       <tr><th>det Σ / |det Ω|</th><td id="o1">–</td><td id="r1">–</td></tr>
       <tr><th>per axis C²</th><td id="o2">–</td><td id="r2">–</td></tr>
-      <tr><th>limit</th><td>C∞⁶ = (π²/3 − 2)³ ≈ 2.2</td><td>2³ = 8</td></tr>
+      <tr><th>limit</th><td>C_N-inf⁶ = (π²/3 − 2)³ ≈ 2.2</td><td>2³ = 8</td></tr>
       <tr><th>saturates (= 1)?</th><td id="o3">–</td><td>never: each ring ≥ 5/4 (d = 3)</td></tr>
     </table></div>
     <p class="note">Open column: Lean <code>CoherenceConstantInf</code> and <code>det_eq_iff</code> (nrs3-hopf, three axes as the sub-case of the box). Ring column: the axis ratio tends to 2 (<code>RingSzego.tendsto_det_ratio_cState</code>);
