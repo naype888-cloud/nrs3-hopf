@@ -3,7 +3,7 @@
 // ---------- tablas ----------
 const LEDGER = [
   ["Robertson 1934 en los 8 observables de la caja, todo estado", "robertson_det_four", "RobertsonFourAxes"],
-  ["en c, det Σ = (Π C(dᵢ))² |det Ω|; igualdad ⟺ cada eje con 2 o 3; límite C_N-inf⁸", "det_covMatrix_maxCurrentState4, det_eq_iff, tendsto_ratio", "RobertsonFourAxes"],
+  ["en c, det Σ = (Π C(dᵢ))² |det Ω|; igualdad ⟺ cada eje con 2 o 3; límite (C_N^∞)⁸", "det_covMatrix_maxCurrentState4, det_eq_iff, tendsto_ratio", "RobertsonFourAxes"],
   ["con cualquier par en w, Σ y Ω diagonales por bloques en estados producto", "covMatrix_box, imMatrix_box", "FourAxes"],
   ["x, y, z dentro de la caja son el cubo, lleve lo que lleve w", "covMatrix_xyz, imMatrix_xyz", "CubeInBox"],
   ["det Σ₈ = det Σ₆ · det Σ_w, |det Ω₈| = |det Ω₆| · |det Ω_w|", "det_covMatrix_box, abs_det_imMatrix_box", "CubeInBox"],
@@ -31,7 +31,7 @@ const COMPARE = [
   ["cuanto desde", "d = 4", "d = 3", "Lean"],
   ["ancho de la banda en el primer d", "0.073", "0.184", "Lean"],
   ["la banda al crecer d", "se angosta hacia c", "se ensancha (v* ≈ 2/d)", "numérico"],
-  ["cociente por eje en el límite", "C_N-inf² ≈ 1.29", "2 (exacto en la costura)", "Lean"],
+  ["cociente por eje en el límite", "(C_N^∞)² ≈ 1.29", "2 (exacto en la costura)", "Lean"],
   ["[P, [T, P]] y T", "se anulan si TΦ = 0", "invertibles", "Lean"],
 ];
 function fillTables() {

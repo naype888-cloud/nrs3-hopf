@@ -29,7 +29,7 @@ except its opposite. This is the boundary of the four-dimensional cross-polytope
 * Each axis closes through the origin and infinity into a ring of four: `−a → 0 → +a → ∞ → −a`,
   with its two diagonals missing.
 * **The uncertainty on this complex** is `RS^N`, the Robertson–Schrödinger relation on `N`
-  positions, with constants `C_N` and `C_N-inf`; it is in `NRS3Hopf.NRSCell16`.
+  positions, with constants `C_N` and `C_N^∞`; it is in `NRS3Hopf.NRSCell16`.
 * **Faces are words of axis steps.** A face of `k` points is `k` different axes, each with a
   sign, so there are `C(4,k) · 2^k` of them. Written as an ordered word of `k` steps the same
   face has `k!` spellings: the order does not change where the steps arrive. One face is one

@@ -25,7 +25,7 @@ current state of the box every block carries `C_N(d)²`, so
   `det Σ = (C_N(dx) C_N(dy) C_N(dz) C_N(dw))² · |det Ω|`.
 
 The ratio is `1` exactly when every axis has `2` or `3` positions, is strictly above `1` when
-every axis has `4` or more, stays strictly below `C_N-inf⁸ = (π²/3 − 2)⁴` and tends to it as the four
+every axis has `4` or more, stays strictly below `(C_N^∞)⁸ = (π²/3 − 2)⁴` and tends to it as the four
 axes grow (`D8`, `D9`).
 
 ## Main results
@@ -38,7 +38,7 @@ axes grow (`D8`, `D9`).
 - `RobertsonFourAxes.det_covMatrix_maxCurrentState4` : the ratio at the maximal current state.
 - `RobertsonFourAxes.det_eq_iff` : equality iff every axis has `2` or `3` positions.
 - `RobertsonFourAxes.robertson_det_maxCurrentState4_strict` : strict from `4` on every axis.
-- `RobertsonFourAxes.ratio_lt_inf`, `RobertsonFourAxes.tendsto_ratio` : below `C_N-inf⁸`, and the
+- `RobertsonFourAxes.ratio_lt_inf`, `RobertsonFourAxes.tendsto_ratio` : below `(C_N^∞)⁸`, and the
   limit.
 -/
 
@@ -183,14 +183,14 @@ theorem robertson_det_maxCurrentState4_strict (hx : 4 ≤ dx) (hy : 4 ≤ dy) (h
   omega
 
 omit hx hy hz hw in
-/-- `C_N-inf⁸ = (π²/3 − 2)⁴`. -/
+/-- `(C_N^∞)⁸ = (π²/3 − 2)⁴`. -/
 theorem CoherenceConstantInf_pow_eight : CoherenceConstantInf ^ 8 = (Real.pi ^ 2 / 3 - 2) ^ 4 := by
   rw [show (8 : ℕ) = 2 * 4 from rfl, pow_mul, CoherenceConstantInf,
     Real.sq_sqrt (by nlinarith [Real.pi_gt_three])]
 
 omit hx hy hz hw in
 /-- **No box reaches the limit**: from `4` positions on every axis the ratio stays below
-`C_N-inf⁸`. -/
+`(C_N^∞)⁸`. -/
 theorem ratio_lt_inf (hx : 4 ≤ dx) (hy : 4 ≤ dy) (hz : 4 ≤ dz) (hw : 4 ≤ dw) :
     (CoherenceConstant dx * CoherenceConstant dy * CoherenceConstant dz *
       CoherenceConstant dw) ^ 2 < CoherenceConstantInf ^ 8 := by
@@ -211,7 +211,7 @@ theorem ratio_lt_inf (hx : 4 ≤ dx) (hy : 4 ≤ dy) (hz : 4 ≤ dz) (hw : 4 ≤
     _ = CoherenceConstantInf ^ 8 := by ring
 
 omit hx hy hz hw in
-/-- **The limit**: as the four axes grow, independently, the ratio tends to `C_N-inf⁸`. -/
+/-- **The limit**: as the four axes grow, independently, the ratio tends to `(C_N^∞)⁸`. -/
 theorem tendsto_ratio :
     Tendsto (fun p : ℕ × ℕ × ℕ × ℕ => (CoherenceConstant p.1 * CoherenceConstant p.2.1 *
         CoherenceConstant p.2.2.1 * CoherenceConstant p.2.2.2) ^ 2)
