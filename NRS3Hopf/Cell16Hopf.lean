@@ -106,7 +106,7 @@ theorem card_triangles_two (a : Fin 4) (ha : a ≠ 3) (b : Bool) :
 /-- **Every tetrahedron has exactly one edge in each fibre.** -/
 theorem one_edge_each (a : Fin 4) (ha : a ≠ 3) (b : Bool) :
     ∀ t ∈ faces 4, ((t.powersetCard 2).filter fun e => ∀ p ∈ e, fiber a p = b).card = 1 := by
-  revert a b; decide
+  revert a b; decide +kernel
 
 /-- **The tetrahedra are the unions of an edge of each fibre**: the `16` cells are `4 × 4`. -/
 theorem tetrahedra_eq_join (a : Fin 4) (ha : a ≠ 3) :
@@ -116,7 +116,7 @@ theorem tetrahedra_eq_join (a : Fin 4) (ha : a ≠ 3) :
 /-- **Every edge of a fibre lies in `4` tetrahedra.** -/
 theorem fiberEdge_in_four (a : Fin 4) (ha : a ≠ 3) (b : Bool) :
     ∀ e ∈ fiberEdges a b, ((faces 4).filter fun t => e ⊆ t).card = 4 := by
-  revert a b; decide
+  revert a b; decide +kernel
 
 /-- **The three open axes give three different fibrations.** -/
 theorem fiber_injective (a a' : Fin 4) (ha : a ≠ 3) (ha' : a' ≠ 3)

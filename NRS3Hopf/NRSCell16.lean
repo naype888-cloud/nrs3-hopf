@@ -28,6 +28,8 @@ statement holds for each of the four axes `k = x, y, z, w`.
 ## Main results
 
 - `NRSCell16.lie_P_P_T` : equal steps, `[P_x, [P_x, T]] = T_x`.
+- `NRSCell16.Pm_comm`, `NRSCell16.lie_T_P_ne_zero` : positions commute with each other; transport
+  and the position of any axis do not.
 - `NRSCell16.top_eigenvector` : `i[T, P_x] ψ* = (1/√3) ψ*`.
 - `NRSCell16.tension` : the tension at `ψ*` is `1/√3`.
 - `NRSCell16.C_cube`, `NRSCell16.tension_sq_le`, `NRSCell16.tension_max` : `C³ = C/3` for
@@ -63,6 +65,28 @@ theorem lie_P_P_T (k : Fin 4) : ⁅Pm k, ⁅Pm k, Tm⁆⁆ = Tx k := by
   ext ⟨a, s⟩ ⟨b, t⟩
   fin_cases k <;> fin_cases a <;> fin_cases b <;> cases s <;> cases t <;>
     simp [Ring.lie_def, Pm, Tm, Tx, Adj, Matrix.sub_apply]
+
+/-! ## What commutes and what does not -/
+
+/-- **Positions on any axes commute**: they are diagonal. Two such observables share one
+statement, and their words in either order arrive at the same place. -/
+theorem Pm_comm (k l : Fin 4) : Pm k * Pm l = Pm l * Pm k := by
+  simp only [Pm, diagonal_mul_diagonal]
+  congr 1
+  funext p
+  exact mul_comm _ _
+
+/-- **Transport and position on the same axis do not commute**, on every axis: `T` joins `+k`
+to a point of another axis, where `P_k` is `0`. This is the defect `T_d : P_d` that stays. -/
+theorem lie_T_P_ne_zero (k : Fin 4) : ⁅Tm, Pm k⁆ ≠ 0 := by
+  intro h
+  have h1 := congrFun (congrFun h (k, true)) (k + 1, true)
+  have hk : k ≠ k + 1 := by
+    intro e
+    have := congrArg (fun x : Fin 4 => x - k) e
+    simp at this
+  simp [Ring.lie_def, Pm, Tm, Adj, Matrix.sub_apply, Matrix.mul_diagonal,
+    Matrix.diagonal_mul, hk, hk.symm] at h1
 
 /-! ## Vectors of the form `(a at +x, b at −x, c elsewhere)` -/
 

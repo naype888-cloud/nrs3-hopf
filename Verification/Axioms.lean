@@ -119,3 +119,16 @@ import NRS3Hopf
 #print axioms BoxCone.interval_axisVector
 #print axioms BoxCone.timelike_box_of_band
 #print axioms BoxCone.properTime_box_pos_of_band
+
+#print axioms Cell16.mem_faces_iff
+#print axioms Cell16.ofSigns_bijective
+#print axioms Cell16.card_faces
+#print axioms Cell16.Word.toFinset_perm
+#print axioms Cell16.Word.toFace_surjective
+#print axioms Cell16.card_word
+#print axioms Cell16GaugeWilson.triangleHolonomy_gauge
+#print axioms Cell16GaugeWilson.triangleAction_gauge
+#print axioms Cell16GaugeWilson.triangleAction_nonneg
+#print axioms Cell16GaugeWilson.triangleAction_eq_zero_iff
+#print axioms NRSCell16.Pm_comm
+#print axioms NRSCell16.lie_T_P_ne_zero
