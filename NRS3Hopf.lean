@@ -58,3 +58,4 @@ public import NRS3Hopf.SiteHopL2
 public import NRS3Hopf.DiracSpeed
 public import NRS3Hopf.LatticeFiberDirac
 public import NRS3Hopf.PlanckBridge
+public import NRS3Hopf.DiracFloor

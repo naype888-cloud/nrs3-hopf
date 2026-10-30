@@ -146,3 +146,6 @@ import NRS3Hopf
 #print axioms PlanckBridge.hamMatrix_isHermitian
 #print axioms PlanckBridge.ham_eq_mulVec
 #print axioms PlanckBridge.ham_thermal_ne_withDensity
+#print axioms DiracFloor.abs_physical_energy_ge
+#print axioms DiracFloor.spacing_floor
+#print axioms DiracFloor.no_zero_spacing
