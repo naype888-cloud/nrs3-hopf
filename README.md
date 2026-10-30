@@ -163,6 +163,62 @@ banda, con la fibra `w` cerrada, `τ > 0` en los cuatro ejes, esté entrelazado 
 | en la banda, con la fibra cerrada, los cuatro ejes son estrictamente temporales | `BoxCone.timelike_box_of_band` |
 | el cuanto irresoluble es un tiempo propio positivo en cada eje | `BoxCone.properTime_box_pos_of_band` |
 
+## Yang–Mills en la caja: acción de Wilson, gap y banda del defecto
+
+La cadena de Kogut–Susskind de `nrs3-tritoro` está portada a esta topología. Los sitios son
+`(x, y, z, w)`, un paso por eje, y las plaquetas están en los 6 planos `(μ, ν)`. El espaciamiento
+`a` queda fijo; no se manda a cero.
+
+| Enunciado | Lean |
+|---|---|
+| los pasos de ejes distintos conmutan; las plaquetas son los 6 planos de los 4 ejes | `HopfYangMills.step_comm`, `HopfYangMills.planes` |
+| la acción de Wilson es invariante de gauge, `≥ 0`, y se anula exactamente con holonomía trivial | `Cell16GaugeWilson.action_gauge`, `action_nonneg`, `action_eq_zero_iff` |
+| lo mismo en los `32` triángulos de la celda de 16 | `Cell16GaugeWilson.triangleAction_gauge`, `triangleAction_nonneg`, `triangleAction_eq_zero_iff` |
+| **ley de Gauss**: el Hamiltoniano de Kogut–Susskind conmuta con toda transformación de gauge | `HopfYangMills.ham_gauge` |
+| gap de acoplamiento fuerte `λE` sobre las constantes, a volumen finito | `HopfYangMills.gap_ham`, `KogutSusskindGap.gap_ham` |
+| estado base positivo, Harnack uniforme en el volumen, unicidad, geometría del grafo de enlaces | `KogutSusskindGround`, `KogutSusskindHarnack`, `KogutSusskindUnique`, `KogutSusskindGeometry` |
+
+### Gap de masa de Dirac en `ℤ³ × w`
+
+| Enunciado | Lean |
+|---|---|
+| `‖Bχ‖² ≥ ‖χ‖²/4` para todo estado de `ℓ²(ℤ³ × w)` | `LatticeFiberDirac.norm_sq_rest_ge` |
+| **gap de masa `1/2`**: todo valor propio de `D` cumple `\|E\| ≥ 1/2` | `LatticeFiberDirac.abs_energy_ge` |
+| **velocidad `1/φ`**: todo vector propio unitario se mueve a lo más a `1/φ` | `LatticeFiberDirac.abs_velocity_le_inv_goldenRatio` |
+| con espaciamiento `a > 0`: velocidad física `≤ a/φ` | `LatticeFiberDirac.abs_physical_velocity_le` |
+| energía física `E = (ħc/a) E_red`: el gap físico es `ħc/(2a)` | `DiracFloor.abs_physical_energy_ge` |
+| si un valor propio tiene energía física `≤ Emax`, entonces `a ≥ ħc/(2 Emax)` (`Emax` es hipótesis) | `DiracFloor.spacing_floor`, `DiracFloor.no_zero_spacing` |
+
+### El defecto es un tiempo propio en una banda que no depende de la caja
+
+En el estado de corriente máxima el exceso de Robertson `δ = (C_dx C_dy C_dz C_dw)² − 1` es
+algebraico: con `c = 1` en el laboratorio es un número. Cruzarlo a `c` toma `δ · a/c`.
+
+| Enunciado | Lean |
+|---|---|
+| `δ > 0` desde 4 posiciones en cada eje | `ProperTimeBand.defect_pos` |
+| `δ ≥ C₄⁸ − 1`: cota inferior que no depende de la caja (monotonía, `D9`) | `ProperTimeBand.defect_ge` |
+| `δ < (C_N^∞)⁸ − 1`: ninguna caja alcanza el límite de Szegő (`D8`) | `ProperTimeBand.defect_lt` |
+| el tiempo propio `δ a/c` cae en `[(C₄⁸ − 1) a/c, ((C_N^∞)⁸ − 1) a/c)` | `ProperTimeBand.properTime_band` |
+| en Physlib, con tres ejes y en el lenguaje de `AlgState`: `det Σ − \|det Ω\| = (R − 1) \|det Ω\|`, `R` entre el de `4×4×4` y `(π²/3 − 2)³` | `Cube/DefectBand.lean` (`defect_eq`, `cubeRatio_ge`, `cubeRatio_lt`) |
+
+### Planck: el lado de la red
+
+El teorema de Poincaré (`nrs3-poincare`, `no_density_planck`; en Physlib #1761) dice que la ley de
+Planck no sale de un peso de energía con densidad. Aquí está la otra mitad:
+
+| Enunciado | Lean |
+|---|---|
+| la medida térmica de un operador hermitiano de dimensión finita es una suma de átomos, nunca una densidad | `PlanckBridge.thermal_ne_withDensity` |
+| la función de partición es `Σ e^{−β λᵢ}` | `PlanckBridge.lintegral_thermal` |
+| el Hamiltoniano de Kogut–Susskind es una matriz hermitiana sobre las configuraciones de enlaces | `PlanckBridge.hamMatrix_isHermitian`, `ham_eq_mulVec` |
+| **ninguna medida con densidad es la medida térmica del Hamiltoniano de red**, para todo volumen y todo acoplamiento | `PlanckBridge.ham_thermal_ne_withDensity` |
+
+Lo que no está en Lean: el límite al continuo de Yang–Mills. A `a > 0` fijo todo lo anterior vale
+para cualquier volumen. Que `a` tenga un piso absoluto no se deduce del álgebra, porque `a` es la
+unidad: el límite es `N → ∞`, el valor de Szegő que ningún tamaño finito alcanza. Con una cota
+`Emax` dada, `DiracFloor.spacing_floor` da el piso; `Emax` no se deriva aquí.
+
 ## Puente físico declarado (propuesta)
 
 El cuarto eje `w` se lee como la fibra de Hopf del espacio físico. El espacio de cuatro ejes es
