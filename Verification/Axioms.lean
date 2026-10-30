@@ -137,3 +137,7 @@ import NRS3Hopf
 #print axioms HopfYangMills.gap_ham
 #print axioms KogutSusskindGap.gap_ham
 #print axioms KogutSusskindGeometry.elecProj_mul_comm
+#print axioms LatticeFiberDirac.norm_sq_rest_ge
+#print axioms LatticeFiberDirac.abs_energy_ge
+#print axioms LatticeFiberDirac.abs_velocity_le_inv_goldenRatio
+#print axioms LatticeFiberDirac.abs_physical_velocity_le
