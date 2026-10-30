@@ -49,3 +49,5 @@ public import NRS3Hopf.KogutSusskindGap
 public import NRS3Hopf.KogutSusskindSpectrum
 public import NRS3Hopf.KogutSusskindGround
 public import NRS3Hopf.KogutSusskindHarnack
+public import NRS3Hopf.KogutSusskindTransform
+public import NRS3Hopf.KogutSusskindSecondDiff
