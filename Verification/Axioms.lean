@@ -141,3 +141,8 @@ import NRS3Hopf
 #print axioms LatticeFiberDirac.abs_energy_ge
 #print axioms LatticeFiberDirac.abs_velocity_le_inv_goldenRatio
 #print axioms LatticeFiberDirac.abs_physical_velocity_le
+#print axioms PlanckBridge.thermal_ne_withDensity
+#print axioms PlanckBridge.lintegral_thermal
+#print axioms PlanckBridge.hamMatrix_isHermitian
+#print axioms PlanckBridge.ham_eq_mulVec
+#print axioms PlanckBridge.ham_thermal_ne_withDensity
