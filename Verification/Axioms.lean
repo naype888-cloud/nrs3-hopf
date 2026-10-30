@@ -132,3 +132,8 @@ import NRS3Hopf
 #print axioms Cell16GaugeWilson.triangleAction_eq_zero_iff
 #print axioms NRSCell16.Pm_comm
 #print axioms NRSCell16.lie_T_P_ne_zero
+#print axioms HopfYangMills.step_comm
+#print axioms HopfYangMills.ham_gauge
+#print axioms HopfYangMills.gap_ham
+#print axioms KogutSusskindGap.gap_ham
+#print axioms KogutSusskindGeometry.elecProj_mul_comm
