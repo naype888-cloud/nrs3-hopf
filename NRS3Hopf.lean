@@ -44,3 +44,4 @@ public import NRS3Hopf.BoxCone
 public import NRS3Hopf.Harper
 public import NRS3Hopf.HarperFourAxes
 public import NRS3Hopf.HarperRobertson
+public import NRS3Hopf.KogutSusskind
