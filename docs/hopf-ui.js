@@ -18,6 +18,13 @@ const LEDGER = [
   ["los ejes de la caja conmutan; igualdad en la caja ⇒ relación entre tensiones", "boxPairs_comm, BoxEquality.exists_sigma_of_det_eq", "BoxCommute, BoxEquality"],
   ["[P, [T°, P]] invertible; T° invertible; núcleo (1, −2, 1)", "PC_eq, eq_zero_of_PC, eq_zero_of_Tc, TC_eq", "ClosedAxisAlgebra"],
   ["k fibras apiladas: det Σ = F^k |det Ω| con F > 1", "closed_stack, one_lt_closedFactor", "StackedFibers"],
+  ["Yang–Mills: los pasos de los 4 ejes conmutan, plaquetas en los 6 planos; ley de Gauss y gap de acoplamiento fuerte a volumen finito", "step_comm, ham_gauge, gap_ham", "HopfYangMills, KogutSusskind, KogutSusskindGap"],
+  ["acción de Wilson: invariante de gauge, ≥ 0, cero ⟺ holonomía trivial (también en los 32 triángulos de la celda de 16)", "action_gauge, action_nonneg, triangleAction_eq_zero_iff", "Cell16GaugeWilson"],
+  ["estado base positivo, Harnack uniforme en el volumen, unicidad", "KogutSusskindHarnack, KogutSusskindUnique", "KogutSusskindGround, KogutSusskindHarnack, KogutSusskindUnique"],
+  ["Dirac en ℤ³ × w: gap de masa 1/2 y velocidad ≤ 1/φ para todo estado", "abs_energy_ge, abs_velocity_le_inv_goldenRatio", "LatticeFiberDirac"],
+  ["con espaciamiento a > 0: gap físico ħc/(2a); si un valor propio tiene E ≤ Emax, a ≥ ħc/(2 Emax) (Emax es hipótesis)", "abs_physical_energy_ge, spacing_floor, no_zero_spacing", "DiracFloor"],
+  ["el defecto de Robertson δ = (Π C)² − 1 es un tiempo propio: δ > 0 desde 4 posiciones por eje, C₄⁸ − 1 ≤ δ < (C_N^∞)⁸ − 1, sin depender de la caja", "defect_pos, defect_ge, defect_lt, properTime_band", "ProperTimeBand"],
+  ["el Hamiltoniano de red es una matriz hermitiana: su medida térmica es atómica, nunca una densidad (mitad de red del dilema de Poincaré)", "ham_thermal_ne_withDensity, thermal_ne_withDensity", "PlanckBridge"],
 ];
 const NUMERIC = [
   ["mínimo de det Σ/|det Ω| con x, y, z = 2×2×2 y la fibra con |t| > 1.05, estados enredados", "1.008", "prueba para todo estado (análogo de D49t)"],
@@ -26,6 +33,7 @@ const NUMERIC = [
   ["la fibra sola con |t| > 1.05", "1.005", "—"],
   ["umbral v* del eje cerrado con d = 4, 6, 10", "0.567, 0.373, 0.210 (≈ 2/d)", "prueba para d ≥ 4"],
   ["razón en la corriente máxima exacta del eje cerrado, d = 160", "1.4186 → √2", "el estado exacto (la costura ya está en Lean)"],
+  ["banda del defecto δ con 4 ejes abiertos de 4 o más posiciones: cota inferior C₄⁸ − 1 y tope (C_N^∞)⁸ − 1", "0.070 ≤ δ < 1.768", "Lean (ProperTimeBand); δ no se mide en metros: a es la unidad"],
 ];
 const COMPARE = [
   ["cuanto desde", "d = 4", "d = 3", "Lean"],
