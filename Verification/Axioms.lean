@@ -149,3 +149,7 @@ import NRS3Hopf
 #print axioms DiracFloor.abs_physical_energy_ge
 #print axioms DiracFloor.spacing_floor
 #print axioms DiracFloor.no_zero_spacing
+#print axioms ProperTimeBand.defect_ge
+#print axioms ProperTimeBand.defect_pos
+#print axioms ProperTimeBand.defect_lt
+#print axioms ProperTimeBand.properTime_band
