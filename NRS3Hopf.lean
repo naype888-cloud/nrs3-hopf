@@ -54,3 +54,4 @@ public import NRS3Hopf.KogutSusskindSecondDiff
 public import NRS3Hopf.KogutSusskindUnique
 public import NRS3Hopf.KogutSusskindGeometry
 public import NRS3Hopf.HopfYangMills
+public import NRS3Hopf.SiteHopL2
