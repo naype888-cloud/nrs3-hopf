@@ -153,3 +153,10 @@ import NRS3Hopf
 #print axioms ProperTimeBand.defect_pos
 #print axioms ProperTimeBand.defect_lt
 #print axioms ProperTimeBand.properTime_band
+#print axioms DiracGapGaugeInvariant.hopC_isSymmetric
+#print axioms DiracGapGaugeInvariant.A_u1_Mw
+#print axioms DiracGapGaugeInvariant.norm_sq_rest_ge_u1
+#print axioms KogutSusskindMixedDiff.a_mul_r_shift
+#print axioms KogutSusskindMixedDiff.Phi_mixed
+#print axioms HodgeCubeFin.d_adjoint_fin
+#print axioms DiracGapGaugeInvariant.norm_sq_rest_ge_pure_u1

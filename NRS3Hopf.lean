@@ -53,6 +53,7 @@ public import NRS3Hopf.KogutSusskindGround
 public import NRS3Hopf.KogutSusskindHarnack
 public import NRS3Hopf.KogutSusskindTransform
 public import NRS3Hopf.KogutSusskindSecondDiff
+public import NRS3Hopf.KogutSusskindMixedDiff
 public import NRS3Hopf.KogutSusskindUnique
 public import NRS3Hopf.KogutSusskindGeometry
 public import NRS3Hopf.HopfYangMills
@@ -61,4 +62,8 @@ public import NRS3Hopf.DiracSpeed
 public import NRS3Hopf.LatticeFiberDirac
 public import NRS3Hopf.PlanckBridge
 public import NRS3Hopf.DiracFloor
+public import NRS3Hopf.DiracGapGaugeInvariant
+public import NRS3Hopf.HodgeCube
+public import NRS3Hopf.HodgeCubeD
+public import NRS3Hopf.HodgeCubeFin
 public import NRS3Hopf.ProperTimeBand
