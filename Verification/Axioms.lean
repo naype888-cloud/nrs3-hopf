@@ -160,3 +160,7 @@ import NRS3Hopf
 #print axioms KogutSusskindMixedDiff.Phi_mixed
 #print axioms HodgeCubeFin.d_adjoint_fin
 #print axioms DiracGapGaugeInvariant.norm_sq_rest_ge_pure_u1
+#print axioms DiracGapGaugeInvariant.pure_gauge_dirac_norm_ge
+#print axioms DiracGapGaugeInvariant.pure_gauge_joint_gap_pos
+#print axioms DiracGapGaugeInvariant.pure_gauge_joint_spectral_bridge
+#print axioms DiracGapGaugeInvariant.pure_gauge_kogut_susskind_dirac_eigenvalue_bridge

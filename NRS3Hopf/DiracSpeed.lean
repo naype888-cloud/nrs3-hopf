@@ -61,6 +61,18 @@ theorem speedLimit_nonneg (m : ℝ) : 0 ≤ Real.sqrt (1 + m ^ 2) - |m| := by
   rw [sub_nonneg, ← Real.sqrt_sq (abs_nonneg m), sq_abs]
   exact Real.sqrt_le_sqrt (by linarith)
 
+/-- **The gap is the speed limit being below `c`**: the speed limit `√(1 + m²) − |m|` is strictly
+below `1` exactly when the mass floor `|m|` is positive; at `m = 0` it is luminal. -/
+theorem speedLimit_lt_one_iff (m : ℝ) :
+    Real.sqrt (1 + m ^ 2) - |m| < 1 ↔ 0 < |m| := by
+  have h := sq_abs m
+  rw [sub_lt_iff_lt_add, Real.sqrt_lt' (by positivity)]
+  constructor <;> intro hm <;> nlinarith [abs_nonneg m]
+
+/-- At zero mass the speed limit is exactly `c = 1`: no gap, luminal. -/
+theorem speedLimit_zero : Real.sqrt (1 + (0 : ℝ) ^ 2) - |(0 : ℝ)| = 1 := by
+  simp
+
 /-- **At mass `1/2` the speed limit is `1/φ`**: `√(1 + 1/4) − 1/2 = (√5 − 1)/2`. -/
 theorem speedLimit_half {m : ℝ} (hm : |m| = 1 / 2) :
     Real.sqrt (1 + m ^ 2) - |m| = Real.goldenRatio⁻¹ := by

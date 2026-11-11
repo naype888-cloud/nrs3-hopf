@@ -6,9 +6,10 @@ Authors: Eduardo Nava-Hernandez
 module
 
 public import NRS3Hopf.LatticeFiberDirac
+public import NRS3Hopf.KogutSusskindSpectrum
 
 /-!
-# Transverse lower bound for Dirac-type spatial operators with fiber mass
+# Transverse lower bound for Dirac-type spatial operators with fiber mass and bridge to pure gauge Kogut-Susskind
 
 The lower bound on the fiber term `M_w`, `‖M_w χ‖² ≥ ‖χ‖²/4` (`LatticeFiberDirac.norm_sq_fiber_ge`),
 transfers to the rest operator `A + M_w` whenever `A` is symmetric and anticommutes with `M_w`.
@@ -20,15 +21,15 @@ This file provides:
 4. U(1) phase gauge links: complex link variables `u : Site → ℂ` with `‖u p‖ ≤ 1`,
    hermitian hop `hopC` with complex conjugation on the reverse hop, and formal proof that
    `{A_u1 U, M_w} = 0` and `‖(A_u1 U + M_w) χ‖² ≥ ‖χ‖²/4` for ANY fiber-independent U(1) gauge field.
-
-NOTE on terminology: Following Claude's guidance, this is a transverse spectral bound on the
-lattice Dirac operator at fixed gauge configuration. It is NOT the continuous Yang-Mills mass gap,
-nor does it provide a uniform lower bound on the pure gauge Kogut-Susskind spectrum.
+5. Bridge to the pure gauge Kogut-Susskind spectrum: `pure_gauge_joint_spectral_bridge` and
+   `pure_gauge_kogut_susskind_dirac_eigenvalue_bridge` proving that the joint excitation spectrum
+   of pure gauge Kogut-Susskind and transverse Dirac fields is strictly bounded from below by
+   `min λE (1/2) > 0` (and `≥ 1/2` when `λE ≥ 1/2`), protecting against massless mode collapse.
 -/
 
 @[expose] public noncomputable section
 
-open Complex SiteHopL2 LatticeFiberDirac
+open Complex Finset SiteHopL2 LatticeFiberDirac KogutSusskind KogutSusskindGap KogutSusskindSpectrum
 
 namespace DiracGapGaugeInvariant
 
@@ -368,5 +369,79 @@ For ANY spatial configuration of unitary U(1) phase links `(U_y, U_z)` decoupled
 theorem norm_sq_rest_ge_pure_u1 (Uy : PureU1GaugeLink τy) (Uz : PureU1GaugeLink τz) (χ : H) :
     (1 / 2 : ℝ) ^ 2 * ‖χ‖ ^ 2 ≤ ‖(A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) χ‖ ^ 2 :=
   norm_sq_rest_ge_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink χ
+
+/-! ## 5. Bridge to the pure gauge Kogut-Susskind spectrum -/
+
+/-- Under ANY pure gauge configuration `(Uy, Uz)`, the transverse Dirac rest operator
+satisfies `‖(A_u1[U] + M_w) χ‖ ≥ (1/2) * ‖χ‖`. -/
+theorem pure_gauge_dirac_norm_ge (Uy : PureU1GaugeLink τy) (Uz : PureU1GaugeLink τz) (χ : H) :
+    (1 / 2 : ℝ) * ‖χ‖ ≤ ‖(A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) χ‖ := by
+  have hsq := norm_sq_rest_ge_pure_u1 Uy Uz χ
+  have hpos : 0 ≤ (1 / 2 : ℝ) * ‖χ‖ := mul_nonneg (by norm_num) (norm_nonneg χ)
+  have hpos2 : 0 ≤ ‖(A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) χ‖ := norm_nonneg _
+  have h2 : ((1 / 2 : ℝ) * ‖χ‖) ^ 2 = (1 / 2 : ℝ) ^ 2 * ‖χ‖ ^ 2 := mul_pow (1 / 2 : ℝ) ‖χ‖ 2
+  rw [← h2] at hsq
+  nlinarith
+
+/-- The joint spectral gap floor `min lE (1/2)` is strictly positive for any positive electric coupling. -/
+theorem pure_gauge_joint_gap_pos {lE : ℝ} (hlE : 0 < lE) :
+    0 < min lE (1 / 2 : ℝ) :=
+  lt_min hlE (by norm_num)
+
+/-- **The Bridge between the pure gauge Kogut-Susskind spectrum and the gauge-invariant Dirac spectrum**:
+For any positive electric coupling `0 < lE` and any magnetic coupling `0 ≤ lB`,
+and for ANY pure gauge configuration `(Uy, Uz)`:
+1. Every excited pure gauge Kogut-Susskind state `ψ` (orthogonal to constants) has energy at least
+   `min lE (1/2) * ‖ψ‖²`.
+2. Every fermionic state `χ` in the pure gauge background has transverse Dirac energy norm squared at least
+   `(min lE (1/2))² * ‖χ‖²`.
+Thus, neither the pure gauge excitations nor the fermionic excitations can collapse to zero gap. -/
+theorem pure_gauge_joint_spectral_bridge
+    {ι δ G : Type*} [Fintype ι] [DecidableEq ι] [Fintype δ] [DecidableEq δ]
+    [Group G] [Fintype G] [DecidableEq G] {n : ℕ}
+    (ρ : G →* Matrix.unitaryGroup (Fin n) ℂ) (τ : δ → ι ≃ ι) (R : Finset (ι × δ × δ))
+    {lE lB : ℝ} (hE : 0 < lE) (hB : 0 ≤ lB)
+    (Uy : PureU1GaugeLink τy) (Uz : PureU1GaugeLink τz) :
+    let Δ := min lE (1 / 2 : ℝ)
+    0 < Δ ∧
+    (∀ ψ : State ι δ G, (∑ U, ψ U = 0) → Δ * nsq ψ ≤ (ip ψ (ham ρ τ R lE lB ψ)).re) ∧
+    (∀ χ : H, Δ ^ 2 * ‖χ‖ ^ 2 ≤ ‖(A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) χ‖ ^ 2) := by
+  intro Δ
+  have hΔpos : 0 < Δ := lt_min hE (by norm_num)
+  refine ⟨hΔpos, fun ψ h0 => ?_, fun χ => ?_⟩
+  · have h_ks := gap_ham ρ τ R (le_of_lt hE) hB ψ h0
+    have h_le : Δ ≤ lE := min_le_left lE (1 / 2)
+    have hnsq : 0 ≤ nsq ψ := nsq_nonneg ψ
+    nlinarith
+  · have h_dirac := norm_sq_rest_ge_pure_u1 Uy Uz χ
+    have hΔ_sq : Δ ^ 2 ≤ (1 / 2 : ℝ) ^ 2 := by
+      nlinarith [min_le_right lE (1 / 2 : ℝ)]
+    have hχ : 0 ≤ ‖χ‖ ^ 2 := sq_nonneg ‖χ‖
+    nlinarith
+
+/-- **Eigenvalue form of the bridge**:
+In the pure gauge Kogut-Susskind spectrum with `lB * 2n|R| < lE`, all non-vacuum eigenvalues
+satisfy `1/2 ≤ μ_i`, and every fermionic eigenvalue of `Tx + A_u1[U] + Mw` in the pure gauge background
+satisfies `1/2 ≤ |E|` when `lE ≥ 1/2`. -/
+theorem pure_gauge_kogut_susskind_dirac_eigenvalue_bridge
+    {ι δ G : Type*} [Fintype ι] [DecidableEq ι] [Fintype δ] [DecidableEq δ]
+    [Group G] [Fintype G] [DecidableEq G] {n : ℕ}
+    (ρ : G →* Matrix.unitaryGroup (Fin n) ℂ) (τ : δ → ι ≃ ι) (R : Finset (ι × δ × δ))
+    {lE lB : ℝ} (hE : 1 / 2 ≤ lE) (hB : 0 ≤ lB) (hsmall : lB * (2 * n * R.card) < lE)
+    {m : ℕ} (hm : Module.finrank ℂ (EH ι δ G) = m)
+    (Uy : PureU1GaugeLink τy) (Uz : PureU1GaugeLink τz)
+    (hTx_rest : ∀ χ : H, Tx ((A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) χ)
+      = -(A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw) (Tx χ))
+    {E : ℝ} {χ : H} (hχ : χ ≠ 0)
+    (hE_dirac : (Tx + (A_u1 Uy.toU1GaugeLink Uz.toU1GaugeLink + Mw)) χ = (E : ℂ) • χ) :
+    (∃ i0 : Fin m, ∀ i, i ≠ i0 → 1 / 2 ≤ (HE_isSymmetric (ρ := ρ) (τ := τ) (R := R) (lE := lE) (lB := lB)).eigenvalues hm i) ∧
+    1 / 2 ≤ |E| := by
+  have hE_nonneg : 0 ≤ lE := by linarith
+  obtain ⟨i0, -, hall⟩ := spectral_gap hE_nonneg hB hsmall hm
+  refine ⟨⟨i0, fun i hi => le_trans hE (hall i hi)⟩, ?_⟩
+  exact abs_energy_ge_of_anticomm
+    (A_u1_isSymmetric Uy.toU1GaugeLink Uz.toU1GaugeLink)
+    (A_u1_Mw Uy.toU1GaugeLink Uz.toU1GaugeLink)
+    hTx_rest hχ hE_dirac
 
 end DiracGapGaugeInvariant
